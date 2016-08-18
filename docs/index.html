@@ -1,0 +1,1617 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A knockoutjs bootstrap sortable filterable with paging table grid component">
+    <meta name="author" content="slimsomania">
+    <!--<link rel="icon" href="favicon.ico">-->
+
+    <title>Knockout-grid by slimsomania</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font awesome CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+	<!-- Font awesome CSS -->
+    <link href="css/knockout-datagrid.css" rel="stylesheet">
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+		body { padding-top: 71px; }
+        .bs-docs-sidebar { width: 263px; }
+        .bs-docs-sidebar.affix { top: 71px; }
+        .example { margin-bottom: 50px;margin-top: -71px;}
+        .example h1 {padding-top: 71px; margin-top: 0;}
+        .example .nav {margin-bottom: 15px;}
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+			
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Knockout-grid</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://github.com/slimsomania/knockout-grid/zipball/master"><i class="fa fa-file-archive-o" aria-hidden="true"></i> Download ZIP</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/slimsomania/knockout-grid/tarball/master"><i class="fa fa-file-archive-o" aria-hidden="true"></i> Download TAR</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/slimsomania/knockout-grid"><i class="fa fa-github" aria-hidden="true"></i> View On GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Fixed navbar -->
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Knockout-grid</h1>
+            <p>A knockoutjs bootstrap sortable filterable with paging table grid component</p>
+            <p>
+                <a class="btn btn-lg btn-info" href="https://github.com/slimsomania/knockout-grid/zipball/master" role="button"><i class="fa fa-file-archive-o" aria-hidden="true"></i> Download ZIP</a>
+                <a class="btn btn-lg btn-info" href="https://github.com/slimsomania/knockout-grid/tarball/master" role="button"><i class="fa fa-file-archive-o" aria-hidden="true"></i> Download TAR</a>
+                <a class="btn btn-lg btn-info" href="https://github.com/slimsomania/knockout-grid" role="button"><i class="fa fa-github" aria-hidden="true"></i> View On GitHub</a>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-3" role="complementary">
+                <nav id="bs-docs-sidebar" class="bs-docs-sidebar" data-spy="affix" data-offset-top="331">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="#default"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Default</a></li>
+                        <li><a href="#sortable"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Sortable</a></li>
+                        <li><a href="#showHide"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Show/Hide</a></li>
+                        <li><a href="#filterable"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Filterable </a></li>
+                        <li><a href="#filterableComplex"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Filterable Complex </a></li>
+                        <li><a href="#customeTemplates"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Custome templates </a></li>
+                        <li><a href="#showHideSort"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Show/Hide sort </a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-9" role="main">
+                <div class="example">
+                    <style type="text/css">
+                       .defaultGridView .dataGrid div.dataGridColumnsContainer { display: none; }
+                       .defaultGridView .dataGrid table thead tr:last-child { display: none; }
+                       .defaultGridView .dataGrid table tr { background-color: #dff0d8; }
+                       .defaultGridView .dataGrid table tr.highlight { background-color: #d9edf7; }
+                       .defaultGridView .dataGrid table tr.highlight td.highlight { background-color: #fcf8e3; }
+                    </style>
+                    <h1 id="default">Basic Example</h1>
+                    <div class="defaultGridView" data-bind="dataGrid: defaultGrid.gridView"></div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#defaultHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#defaultCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#defaultJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="defaultHtml">
+        <pre>&lt;div class=&quot;defaultGridView&quot; data-bind=&quot;dataGrid: defaultGrid&quot;&gt;&lt;/div&gt;</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="defaultCss">
+        <pre>
+.defaultGridView .dataGrid div.dataGridColumnsContainer { display: none; }
+.defaultGridView .dataGrid table thead tr:last-child { display: none; }
+.defaultGridView .dataGrid table tr { background-color: #dff0d8; }
+.defaultGridView .dataGrid table tr.highlight { background-color: #d9edf7; }
+.defaultGridView .dataGrid table tr.highlight td.highlight { background-color: #fcf8e3; }</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="defaultJs">
+        <pre>
+function DefaultGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        highlightRow: function (i) { return i.gender.indexOf("Male") > -1 },
+        pageSize: 10,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: true,
+                    highlightCell: function (i) { return i.email.indexOf("com") > -1 },
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true
+                }
+        ]
+    });
+}</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                        .sortableGridView .dataGrid .dataGridColumnsContainer {display: none;}
+                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+                        .sortableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+                    </style>
+                    <h1 id="sortable">Sortable table</h1>
+                    <div class="sortableGridView" data-bind="dataGrid: sortableGrid.gridView"></div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#sortableHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#sortableCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#sortableJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="sortableHtml">
+        <pre>
+&lt;div class=&quot;sortableGridView&quot; data-bind=&quot;dataGrid: sortableGrid.gridView&quot;&gt;&lt;/div&gt;</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="sortableCss">
+        <pre>
+.sortableGridView .dataGrid .dataGridColumnsContainer {display: none;}
+.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+.sortableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="sortableJs">
+        <pre>
+function SortableGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true,
+                    isSortable: true
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true,
+                    isSortable: true
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true,
+                    isSortable: true
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: true,
+                    isSortable: true
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true,
+                    isSortable: true
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true,
+                    isSortable: true
+                }
+        ]
+    });
+}</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                        .showHideGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+                        .showHideGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+                    </style>
+                    <h1 id="showHide">Show/Hide columns</h1>
+                    <div class="showHideGridView" data-bind="dataGrid: showHideGrid.gridView"></div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#showHideleHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#showHideCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#showHideJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="showHideleHtml">
+        <pre>
+&lt;div class=&quot;showHideGridView&quot; data-bind=&quot;dataGrid: showHideGrid.gridView&quot;&gt;&lt;/div&gt;</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="showHideCss">
+        <pre>
+.showHideGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+.showHideGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="showHideJs">
+        <pre>
+function ShowHideGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        autoHideFilter: true,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Color',
+                    itemProperty: "color",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(false)
+                },
+                {
+                    name: 'Company Name',
+                    itemProperty: "companyName",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(false)
+                }
+        ]
+    });
+}</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">                        
+                        .filterableGridView .dataGrid .dataGridColumnsContainer {display: none;}
+                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+                        .filterableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+                    </style>
+                    <h1 id="filterable">Filterable table</h1>
+                    <div class="filterableGridView" data-bind="dataGrid: filterGrid.gridView"></div>
+
+                    <script id="filterStringTemplate" type="text/html">
+                        <form class="row" style="min-width: 250px;">
+                             <!-- ko with: filter -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Start typing item name:</label>
+                                    <div class="input-group ">
+                                        <input type="text" class="form-control" data-bind="value: q, valueUpdate: 'afterkeydown'">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" data-bind="click: function () { q('') }">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </form>
+                    </script>
+
+                    <script id="filterNumberTemplate" type="text/html">
+                        <form class="row" style="min-width: 325px">
+                            <!-- ko with: filter -->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>From:</label>
+                                            <div class="input-group ">
+                                                <input type="text" class="form-control" data-bind="value: from, valueUpdate: 'afterkeydown'" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-bind="click: function () { from('') }">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>To:</label>
+                                            <div class="input-group ">
+                                                <input type="text" class="form-control" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" data-bind="click: function () { to('') }">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 ">
+                                <p class="help-block" data-bind="visible: from() && to() && from() > to()" >
+                                    <span class="text-danger">"From" value can not be greater than "To" value.</span>
+                                </p>
+                            </div>
+                            <!-- /ko -->
+                        </form>
+                    </script>
+
+                    <script id="filterSelectedTemplate" type="text/html">
+                        <form class="row" style="min-width: 270px;">
+                            <!-- ko with: filter -->
+                                <div class="col-md-12">
+                                    <label>Select item value:</label>
+                                    <div class="form-group" style="max-height: 328px; overflow-y: auto;">
+                                        <!-- ko foreach: $root.columnUniqueValues($parent) -->
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.q" />
+                                                <span data-bind="text:  $data"></span>
+                                            </label>
+                                        </div>
+                                        <!-- /ko -->
+                                    </div>
+                                </div>
+                            <!-- /ko -->
+                        </form>
+                    </script>
+
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#filterableHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#filterableCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#filterableJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="filterableHtml">
+        <pre>
+&lt;div class="filterableGridView" data-bind="dataGrid: filterGrid.gridView"&gt;&lt;/div&gt;
+
+&lt;script id="filterStringTemplate" type="text/html"&gt;
+	&lt;form class="row" style="min-width: 250px;"&gt;
+		 &lt;!-- ko with: filter --&gt;
+		&lt;div class="col-md-12"&gt;
+			&lt;div class="form-group"&gt;
+				&lt;label&gt;Start typing item name:&lt;/label&gt;
+				&lt;div class="input-group "&gt;
+					&lt;input type="text" class="form-control" data-bind="value: q, valueUpdate: 'afterkeydown'"&gt;
+					&lt;span class="input-group-btn"&gt;
+						&lt;button class="btn btn-default" data-bind="click: function () { q('') }"&gt;
+							&lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
+						&lt;/button&gt;
+					&lt;/span&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;!-- /ko --&gt;
+	&lt;/form&gt;
+&lt;/script&gt;
+
+&lt;script id="filterNumberTemplate" type="text/html"&gt;
+	&lt;form class="row" style="min-width: 325px"&gt;
+		&lt;!-- ko with: filter --&gt;
+		&lt;div class="col-md-12"&gt;
+			&lt;div class="row"&gt;
+				&lt;div class="col-md-6"&gt;
+					&lt;div class="form-group"&gt;
+						&lt;label&gt;From:&lt;/label&gt;
+						&lt;div class="input-group "&gt;
+							&lt;input type="text" class="form-control" data-bind="value: from, valueUpdate: 'afterkeydown'" /&gt;
+							&lt;span class="input-group-btn"&gt;
+								&lt;button class="btn btn-default" data-bind="click: function () { from('') }"&gt;
+									&lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
+								&lt;/button&gt;
+							&lt;/span&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+				&lt;div class="col-md-6"&gt;
+					&lt;div class="form-group"&gt;
+						&lt;label&gt;To:&lt;/label&gt;
+						&lt;div class="input-group "&gt;
+							&lt;input type="text" class="form-control" data-bind="value: to, valueUpdate: 'afterkeydown'" /&gt;
+							&lt;span class="input-group-btn"&gt;
+								&lt;button class="btn btn-default" data-bind="click: function () { to('') }"&gt;
+									&lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
+								&lt;/button&gt;
+							&lt;/span&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="col-md-12 "&gt;
+			&lt;p class="help-block" data-bind="visible: from() && to() && from() &gt; to()" &gt;
+				&lt;span class="text-danger"&gt;"From" value can not be greater than "To" value.&lt;/span&gt;
+			&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;!-- /ko --&gt;
+	&lt;/form&gt;
+&lt;/script&gt;
+
+&lt;script id="filterSelectedTemplate" type="text/html"&gt;
+	&lt;form class="row" style="min-width: 270px;"&gt;
+		&lt;!-- ko with: filter --&gt;
+			&lt;div class="col-md-12"&gt;
+				&lt;label&gt;Select item value:&lt;/label&gt;
+				&lt;div class="form-group" style="max-height: 328px; overflow-y: auto;"&gt;
+					&lt;!-- ko foreach: $root.columnUniqueValues($parent) --&gt;
+					&lt;div class="checkbox"&gt;
+						&lt;label&gt;
+							&lt;input type="checkbox" data-bind="checkedValue: $data, checked: $parent.q" /&gt;
+							&lt;span data-bind="text:  $data"&gt;&lt;/span&gt;
+						&lt;/label&gt;
+					&lt;/div&gt;
+					&lt;!-- /ko --&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;!-- /ko --&gt;
+	&lt;/form&gt;
+&lt;/script&gt;</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="filterableCss">
+        <pre>
+.filterableGridView .dataGrid .dataGridColumnsContainer {display: none;}
+.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+.filterableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="filterableJs">
+        <pre>
+function FilterGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        autoHideFilter: true,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true,
+                    filter: {
+                        from: ko.observable(),
+                        to: ko.observable(),
+                        func: function (f, i) {
+                            if (f.from() && f.to()) return f.from() <= i.id && i.id <= f.to();
+                            if (f.from()) return f.from() <= i.id;
+                            if (f.to()) return f.to() >= i.id;
+                            return true;
+                        },
+                        isActive: function () {
+                            return this.from() || this.to();
+                        }
+                    },
+                    templates: {
+                        filter: "filterNumberTemplate"
+                    }
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true,
+                    filter: { 
+                        q: ko.observable(""), 
+                        func: function (f, i) {
+                            return i.firstName.indexOf(f.q()) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.q();
+                        }
+
+                    },
+                    templates: {
+                        filter: "filterStringTemplate"
+                    }
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true,
+                    filter: { 
+                        q: ko.observable(""), 
+                        func: function (f, i) {
+                            return i.lastName.indexOf(f.q()) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.q();
+                        }
+                    },
+                    templates: {
+                        filter: "filterStringTemplate"
+                    }
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: true,
+                    filter: {
+                        q: ko.observableArray(),
+                        func: function (f, i) {
+                            return !f.q().length || ko.utils.arrayIndexOf(f.q(), i.email) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.q().length;
+                        }
+                    },
+                    templates: {
+                        filter: "filterSelectedTemplate"
+                    }
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true,
+                    filter: {
+                        q: ko.observableArray(),
+                        func: function (f, i) {
+                            return !f.q().length || ko.utils.arrayIndexOf(f.q(), i.gender) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.q().length;
+                        }
+                    },
+                    templates: {
+                        filter: "filterSelectedTemplate"
+                    }
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true,
+                    filter: {
+                        q: ko.observableArray(),
+                        func: function (f, i) {
+                            return !f.q().length || ko.utils.arrayIndexOf(f.q(), i.iPaddress) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.q().length;
+                        }
+                    },
+                    templates: {
+                        filter: "filterSelectedTemplate"
+                    }
+                }
+        ]
+    });
+
+    self.gridView.columnUniqueValues = function (column) {
+        var data = ko.utils.arrayMap(self.gridView.data(), function (i) { return i[column.itemProperty]; });
+        return values = ko.utils.arrayGetDistinctValues(data);
+    };
+}</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                        .filterableComplexGridView .dataGrid .dataGridColumnsContainer {display: none;}
+                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+                        .filterableComplexGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+                    </style>
+                    <h1 id="filterableComplex">Filterable complex table</h1>
+                    <div class="filterableComplexGridView" data-bind="dataGrid: filterComplexGrid.gridView"></div>
+
+                    <script id="filterComplexNumberTemplate" type="text/html">
+                        <form style="width: 325px;">
+                            <!-- ko with: filter -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>From:</label>
+                                        <div class="input-group ">
+                                            <input type="text" class="form-control" data-bind="value: from, valueUpdate: 'afterkeydown'" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-bind="click: function () { from('') }">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>To:</label>
+                                        <div class="input-group ">
+                                            <input type="text" class="form-control" data-bind="value: to, valueUpdate: 'afterkeydown'" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-bind="click: function () { to('') }">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <p class="help-block" data-bind="visible: from() && to() && +from() > +to()">
+                                        <span class="text-danger">"From" value can not be greater than "To" value.</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                     <div class="form-group text-right" style="margin-bottom: 0;">
+                                        <button class="btn btn-default" data-bind="click: function () { $root.currentOpenFilter(''); }">Cancel</button>
+                                        <button class="btn btn-success" data-bind="click: function () { save(); $root.currentOpenFilter(''); $root.currentPageIndex(0); }">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </form>
+                    </script>
+
+                    <script id="filterComplexSelectedTemplate" type="text/html">
+                        <form class="row" style="min-width: 270px;">
+                            <!-- ko with: filter -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="input-group ">
+                                            <input type="text" class="form-control" data-bind="value: query, valueUpdate: 'afterkeydown'" placeholder="Search...">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" data-bind="click: function () { query('') }">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="max-height: 328px; overflow-y: auto;">
+                                        <!-- ko if: !query() -->
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" data-bind="checked: isAllSelected, click: function () { selected(isAllSelected() ? $root.columnUniqueValues($parent) : []); return true; }">
+                                                <strong>Select All</strong>
+                                            </label>
+                                        </div>
+                                        <!-- /ko -->
+                                        <!-- ko foreach: $root.columnUniqueValues($parent) -->
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.selected, click: function () { $parent.isAllSelected(false); return true; }" />
+                                                <span data-bind="text: $data"></span>
+                                            </label>
+                                        </div>
+                                        <!-- /ko -->
+                                    </div>
+                                    <div class="form-group text-right" style="margin-bottom: 0;">
+                                        <button class="btn btn-default" data-bind="click: function () { $root.currentOpenFilter(''); }">Cancel</button>
+                                        <button class="btn btn-success" data-bind="click: function () { save(); $root.currentOpenFilter(''); $root.currentPageIndex(0); }">Apply</button>
+                                    </div>
+                                </div>
+                            <!-- /ko -->
+                        </form>
+                    </script>
+
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#filterableComplexHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#filterableComplexCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#filterableComplexJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="filterableComplexHtml">
+<pre>
+&lt;div class="filterableComplexGridView" data-bind="dataGrid: filterComplexGrid.gridView"&gt;&lt;/div&gt;
+
+&lt;script id="filterComplexNumberTemplate" type="text/html"&gt;
+	&lt;form style="width: 325px;"&gt;
+		&lt;!-- ko with: filter --&gt;
+		&lt;div class="row"&gt;
+			&lt;div class="col-md-6"&gt;
+				&lt;div class="form-group"&gt;
+					&lt;label&gt;From:&lt;/label&gt;
+					&lt;div class="input-group "&gt;
+						&lt;input type="text" class="form-control" data-bind="value: from, valueUpdate: 'afterkeydown'" /&gt;
+						&lt;span class="input-group-btn"&gt;
+							&lt;button class="btn btn-default" data-bind="click: function () { from('') }"&gt;
+								&lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
+							&lt;/button&gt;
+						&lt;/span&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="col-md-6"&gt;
+				&lt;div class="form-group"&gt;
+					&lt;label&gt;To:&lt;/label&gt;
+					&lt;div class="input-group "&gt;
+						&lt;input type="text" class="form-control" data-bind="value: to, valueUpdate: 'afterkeydown'" /&gt;
+						&lt;span class="input-group-btn"&gt;
+							&lt;button class="btn btn-default" data-bind="click: function () { to('') }"&gt;
+								&lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
+							&lt;/button&gt;
+						&lt;/span&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="row"&gt;
+			&lt;div class="col-md-12 "&gt;
+				&lt;p class="help-block" data-bind="visible: from() && to() && +from() &gt; +to()"&gt;
+					&lt;span class="text-danger"&gt;"From" value can not be greater than "To" value.&lt;/span&gt;
+				&lt;/p&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="row"&gt;
+			&lt;div class="col-md-12"&gt;
+				 &lt;div class="form-group text-right" style="margin-bottom: 0;"&gt;
+					&lt;button class="btn btn-default" data-bind="click: function () { $root.currentOpenFilter(''); }"&gt;Cancel&lt;/button&gt;
+					&lt;button class="btn btn-success" data-bind="click: function () { save(); $root.currentOpenFilter(''); $root.currentPageIndex(0); }"&gt;Apply&lt;/button&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;!-- /ko --&gt;
+	&lt;/form&gt;
+&lt;/script&gt;
+
+&lt;script id="filterComplexSelectedTemplate" type="text/html"&gt;
+	&lt;form class="row" style="min-width: 270px;"&gt;
+		&lt;!-- ko with: filter --&gt;
+			&lt;div class="col-md-12"&gt;
+				&lt;div class="form-group"&gt;
+					&lt;div class="input-group "&gt;
+						&lt;input type="text" class="form-control" data-bind="value: query, valueUpdate: 'afterkeydown'" placeholder="Search..."&gt;
+						&lt;span class="input-group-btn"&gt;
+							&lt;button class="btn btn-default" data-bind="click: function () { query('') }"&gt;
+								&lt;span class="glyphicon glyphicon-remove"&gt;&lt;/span&gt;
+							&lt;/button&gt;
+						&lt;/span&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+				&lt;div class="form-group" style="max-height: 328px; overflow-y: auto;"&gt;
+					&lt;!-- ko if: !query() --&gt;
+					&lt;div class="checkbox"&gt;
+						&lt;label&gt;
+							&lt;input type="checkbox" data-bind="checked: isAllSelected, click: function () { selected(isAllSelected() ? $root.columnUniqueValues($parent) : []); return true; }"&gt;
+							&lt;strong&gt;Select All&lt;/strong&gt;
+						&lt;/label&gt;
+					&lt;/div&gt;
+					&lt;!-- /ko --&gt;
+					&lt;!-- ko foreach: $root.columnUniqueValues($parent) --&gt;
+					&lt;div class="checkbox"&gt;
+						&lt;label&gt;
+							&lt;input type="checkbox" data-bind="checkedValue: $data, checked: $parent.selected, click: function () { $parent.isAllSelected(false); return true; }" /&gt;
+							&lt;span data-bind="text: $data"&gt;&lt;/span&gt;
+						&lt;/label&gt;
+					&lt;/div&gt;
+					&lt;!-- /ko --&gt;
+				&lt;/div&gt;
+				&lt;div class="form-group text-right" style="margin-bottom: 0;"&gt;
+					&lt;button class="btn btn-default" data-bind="click: function () { $root.currentOpenFilter(''); }"&gt;Cancel&lt;/button&gt;
+					&lt;button class="btn btn-success" data-bind="click: function () { save(); $root.currentOpenFilter(''); $root.currentPageIndex(0); }"&gt;Apply&lt;/button&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;!-- /ko --&gt;
+	&lt;/form&gt;
+&lt;/script&gt;</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="filterableComplexCss">
+<pre>
+.filterableComplexGridView .dataGrid .dataGridColumnsContainer {display: none;}
+.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+.filterableComplexGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="filterableComplexJs">
+        <pre>
+function FilterComplexGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true,
+                    filter: {
+                        appliedFrom: ko.observable(),
+                        appliedTo: ko.observable(),
+                        from: ko.observable(),
+                        to: ko.observable(),
+                        func: function (f, i) {
+                            if (f.appliedFrom() && f.appliedTo()) return f.appliedFrom() <= i.id && i.id <= f.appliedTo();
+                            if (f.appliedFrom()) return f.appliedFrom() <= i.id;
+                            if (f.appliedTo()) return f.appliedTo() >= i.id;
+                            return true;
+                        },
+                        isActive: function () {
+                            return this.appliedFrom() || this.appliedTo();
+                        },
+                        save: function () {
+                            this.appliedFrom(this.from());
+                            this.appliedTo(this.to());
+                        }
+                    },
+                    templates: {
+                        filter: "filterComplexNumberTemplate"
+                    }
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true,
+                    filter: {
+                        query: ko.observable(),
+                        isAllSelected: ko.observable(),
+                        applied: ko.observableArray(),
+                        selected: ko.observableArray(),
+                        selectAll: function () {
+                            this.selected(this.isAllSelected() ? this.values() : []);
+                        },
+                        func: function (f, i) {
+                            return !f.applied().length || ko.utils.arrayIndexOf(f.applied(), i.firstName) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.applied().length;
+                        },
+                        save: function () {
+                            if (this.isAllSelected()) {
+                                this.applied.removeAll();
+                                return;
+                            }
+                            this.applied(this.selected());
+                        }
+
+                    },
+                    templates: {
+                        filter: "filterComplexSelectedTemplate"
+                    }
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true,
+                    filter: {
+                        query: ko.observable(),
+                        isAllSelected: ko.observable(),
+                        applied: ko.observableArray(),
+                        selected: ko.observableArray(),
+                        selectAll: function () {
+                            this.selected(this.isAllSelected() ? this.values() : []);
+                        },
+                        func: function (f, i) {
+                            return !f.applied().length || ko.utils.arrayIndexOf(f.applied(), i.lastName) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.applied().length;
+                        },
+                        save: function () {
+                            if (this.isAllSelected()) {
+                                this.applied.removeAll();
+                                return;
+                            }
+                            this.applied(this.selected());
+                        }
+
+                    },
+                    templates: {
+                        filter: "filterComplexSelectedTemplate"
+                    }
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: true,
+                    filter: {
+                        query: ko.observable(),
+                        isAllSelected: ko.observable(),
+                        applied: ko.observableArray(),
+                        selected: ko.observableArray(),
+                        selectAll: function () {
+                            this.selected(this.isAllSelected() ? this.values() : []);
+                        },
+                        func: function (f, i) {
+                            return !f.applied().length || ko.utils.arrayIndexOf(f.applied(), i.email) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.applied().length;
+                        },
+                        save: function () {
+                            if (this.isAllSelected()) {
+                                this.applied.removeAll();
+                                return;
+                            }
+                            this.applied(this.selected());
+                        }
+
+                    },
+                    templates: {
+                        filter: "filterComplexSelectedTemplate"
+                    }
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true,
+                    filter: {
+                        query: ko.observable(),
+                        isAllSelected: ko.observable(),
+                        applied: ko.observableArray(),
+                        selected: ko.observableArray(),
+                        selectAll: function () {
+                            this.selected(this.isAllSelected() ? this.values() : []);
+                        },
+                        func: function (f, i) {
+                            return !f.applied().length || ko.utils.arrayIndexOf(f.applied(), i.gender) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.applied().length;
+                        },
+                        save: function () {
+                            if (this.isAllSelected()) {
+                                this.applied.removeAll();
+                                return;
+                            }
+                            this.applied(this.selected());
+                        }
+
+                    },
+                    templates: {
+                        filter: "filterComplexSelectedTemplate"
+                    }
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true,
+                    filter: {
+                        query: ko.observable(),
+                        isAllSelected: ko.observable(),
+                        applied: ko.observableArray(),
+                        selected: ko.observableArray(),
+                        selectAll: function () {
+                            this.selected(this.isAllSelected() ? this.values() : []);
+                        },
+                        func: function (f, i) {
+                            return !f.applied().length || ko.utils.arrayIndexOf(f.applied(), i.iPaddress) > -1;
+                        },
+                        isActive: function () {
+                            return !!this.applied().length;
+                        },
+                        save: function () {
+                            if (this.isAllSelected()) {
+                                this.applied.removeAll();
+                                return;
+                            }
+                            this.applied(this.selected());
+                        }
+
+                    },
+                    templates: {
+                        filter: "filterComplexSelectedTemplate"
+                    }
+                }
+        ]
+    });
+
+    self.gridView.columnUniqueValues = function (column) {
+        var data = ko.utils.arrayMap(self.gridView.data(), function (i) { return i[column.itemProperty]; });
+        var values = ko.utils.arrayGetDistinctValues(data);
+        return ko.utils.arrayFilter(values, function (i) { return i.toLocaleLowerCase().indexOf((column.filter.query() || "").toLocaleLowerCase()) > -1; });
+    };
+}</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                        .customTemplatesGridView .dataGrid div.dataGridColumnsContainer { display: none; }
+                        .customTemplatesGridView .dataGrid table thead tr:last-child { display: none; }
+                        .customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+                        .customTemplatesGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+                        .customTemplatesGridView .dataGrid table.dataGridTable > tbody > tr > td.genderItem {text-align: center;}
+                    </style>
+                    <h1 id="customeTemplates">Custom templates</h1>
+                    <div class="customTemplatesGridView" data-bind="dataGrid: customTemplatesGrid.gridView"></div>
+
+                    <script id="customeTemplatesHeaderTemplate" type="text/html">
+                        <a href="#" class="nowrap" data-bind="click: $parent.changeOrder">
+                            <span class="" data-bind="css: { active: $parent.isActiveSorting($data) }">
+                                <i class="glyphicon glyphicon-sort" data-bind="visible: $parent.isVisibleFilter($data)"></i>
+                                <i class="glyphicon glyphicon-sort-by-attributes" data-bind="visible: $parent.isVisibleFilter($data, $parent.sortOrder.ascending)"></i>
+                                <i class="glyphicon glyphicon-sort-by-attributes-alt" data-bind="visible: $parent.isVisibleFilter($data, $parent.sortOrder.descending)"></i>
+                            </span>
+                            <span data-bind="text: name"></span>
+                        </a>
+                    </script>
+
+                     <script id="customeTemplatesIdItemTemplate" type="text/html">
+                        # <span data-bind="text: $parent[itemProperty]"></span>
+                     </script>
+
+                     <script id="customeTemplatesFnItemTemplate" type="text/html">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span data-bind="text: $parent[itemProperty]"></span>
+                     </script>
+
+                     <script id="customeTemplatesLnItemTemplate" type="text/html">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span data-bind="text: $parent[itemProperty]"></span>
+                     </script>
+
+                     <script id="customeTemplatesEmailItemTemplate" type="text/html">
+                         <a href="" data-bind="attr: { href: 'mailto:' + $parent[itemProperty] }, text: $parent[itemProperty]"></a>
+                     </script>
+
+                     <script id="customeTemplatesGenderItemTemplate" type="text/html">
+                        <span data-bind="text: $parent[itemProperty].charAt(0)"></span>
+                     </script>
+
+                     <script id="customeTemplatesIpItemTemplate" type="text/html">
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                        <span data-bind="text: $parent[itemProperty]"></span>
+                     </script>
+
+                    <!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#customeTemplatesHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#customeTemplatesCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#customeTemplatesJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="customeTemplatesHtml">
+        <pre>
+&lt;div class="customTemplatesGridView" data-bind="dataGrid: customTemplatesGrid.gridView"&gt;&lt;/div&gt;
+
+&lt;script id="customeTemplatesHeaderTemplate" type="text/html"&gt;
+	&lt;a href="#" class="nowrap" data-bind="click: $parent.changeOrder"&gt;
+		&lt;span class="" data-bind="css: { active: $parent.isActiveSorting($data) }"&gt;
+			&lt;i class="glyphicon glyphicon-sort" data-bind="visible: $parent.isVisibleFilter($data)"&gt;&lt;/i&gt;
+			&lt;i class="glyphicon glyphicon-sort-by-attributes" data-bind="visible: $parent.isVisibleFilter($data, $parent.sortOrder.ascending)"&gt;&lt;/i&gt;
+			&lt;i class="glyphicon glyphicon-sort-by-attributes-alt" data-bind="visible: $parent.isVisibleFilter($data, $parent.sortOrder.descending)"&gt;&lt;/i&gt;
+		&lt;/span&gt;
+		&lt;span data-bind="text: name"&gt;&lt;/span&gt;
+	&lt;/a&gt;
+&lt;/script&gt;
+
+ &lt;script id="customeTemplatesIdItemTemplate" type="text/html"&gt;
+	# &lt;span data-bind="text: $parent[itemProperty]"&gt;&lt;/span&gt;
+ &lt;/script&gt;
+
+ &lt;script id="customeTemplatesFnItemTemplate" type="text/html"&gt;
+	&lt;i class="fa fa-user" aria-hidden="true"&gt;&lt;/i&gt;
+	&lt;span data-bind="text: $parent[itemProperty]"&gt;&lt;/span&gt;
+ &lt;/script&gt;
+
+ &lt;script id="customeTemplatesLnItemTemplate" type="text/html"&gt;
+	&lt;i class="fa fa-user" aria-hidden="true"&gt;&lt;/i&gt;
+	&lt;span data-bind="text: $parent[itemProperty]"&gt;&lt;/span&gt;
+ &lt;/script&gt;
+
+ &lt;script id="customeTemplatesEmailItemTemplate" type="text/html"&gt;
+	 &lt;a href="" data-bind="attr: { href: 'mailto:' + $parent[itemProperty] }, text: $parent[itemProperty]"&gt;&lt;/a&gt;
+ &lt;/script&gt;
+
+ &lt;script id="customeTemplatesGenderItemTemplate" type="text/html"&gt;
+	&lt;span data-bind="text: $parent[itemProperty].charAt(0)"&gt;&lt;/span&gt;
+ &lt;/script&gt;
+
+ &lt;script id="customeTemplatesIpItemTemplate" type="text/html"&gt;
+	&lt;i class="fa fa-globe" aria-hidden="true"&gt;&lt;/i&gt;
+	&lt;span data-bind="text: $parent[itemProperty]"&gt;&lt;/span&gt;
+ &lt;/script&gt;</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="customeTemplatesCss">
+        <pre>
+.customTemplatesGridView .dataGrid div.dataGridColumnsContainer { display: none; }
+.customTemplatesGridView .dataGrid table thead tr:last-child { display: none; }
+.customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active,
+.customTemplatesGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+.customTemplatesGridView .dataGrid table.dataGridTable > tbody > tr > td.genderItem {text-align: center;}</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="customeTemplatesJs">
+        <pre>
+function CustomeTemplatesGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true,
+                    templates: {
+                        header: "customeTemplatesHeaderTemplate",
+                        item: "customeTemplatesIdItemTemplate"
+                    }
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true,
+                    templates: {
+                        header: "customeTemplatesHeaderTemplate",
+                        item: "customeTemplatesFnItemTemplate"
+                    }
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true,
+                    templates: {
+                        header: "customeTemplatesHeaderTemplate",
+                        item: "customeTemplatesLnItemTemplate"
+                    }
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: true,
+                    templates: {
+                        header: "customeTemplatesHeaderTemplate",
+                        item: "customeTemplatesEmailItemTemplate"
+                    }
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true,
+                    isSortable: true,
+                    templates: {
+                        header: "customeTemplatesHeaderTemplate",
+                        item: "customeTemplatesGenderItemTemplate"
+                    }
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true,
+                    isSortable: true,
+                    templates: {
+                        header: "customeTemplatesHeaderTemplate",
+                        item: "customeTemplatesIpItemTemplate"
+                    }
+                }
+        ]
+    });
+}</pre>
+    </div>
+
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                        .showHideSortGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+                        .showHideSortGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+                        .showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li {border: 1px solid #dddddd;cursor: move;margin-bottom: 3px;padding: 0 6px;}
+                        .showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li.ui-sortable-helper  {border: #dddddd dashed 1px;}
+                    </style>
+                    <h1 id="showHideSort">Custom templates</h1>
+                    <div class="showHideSortGridView" data-bind="dataGrid: showHideSortGrid.gridView"></div>
+
+                    <script id="sortedColumnsTemplate" type="text/html">
+                        <div class="dataGridColumnsContainer">
+                            <a href="" class="dataGridColumnsLink" data-bind="click: function () { showFilter('columns') }">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <!-- ko if: currentOpenFilter() == 'columns' -->
+                            <div class="dataGridColumnsListContainer">
+                                <ul class="list-group sortable" data-bind="sortable: { template: 'sortedColumnItemTemplate', data: columns }"></ul>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </script>
+                    <script id="sortedColumnItemTemplate" type="text/html">
+                        <li class="">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="checked: isVisible, click: function () { $parent.updateColumn($data); return true; }" />
+                                    <span data-bind="text: name"></span>
+                                </label>
+                            </div>
+                        </li>
+                    </script>
+
+                    <!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#showHideSortHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#showHideSortCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#showHideSortJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="showHideSortHtml">
+        <pre>
+&lt;script src="http://code.jquery.com/ui/jquery-ui-git.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"&gt;&lt;/script&gt;
+
+&lt;div class="showHideSortGridView" data-bind="dataGrid: showHideSortGrid.gridView"&gt;&lt;/div&gt;
+
+&lt;script id="sortedColumnsTemplate" type="text/html"&gt;
+	&lt;div class="dataGridColumnsContainer"&gt;
+		&lt;a href="" class="dataGridColumnsLink" data-bind="click: function () { showFilter('columns') }"&gt;
+			&lt;i class="fa fa-cog"&gt;&lt;/i&gt;
+		&lt;/a&gt;
+		&lt;!-- ko if: currentOpenFilter() == 'columns' --&gt;
+		&lt;div class="dataGridColumnsListContainer"&gt;
+			&lt;ul class="list-group sortable" data-bind="sortable: { template: 'sortedColumnItemTemplate', data: columns }"&gt;&lt;/ul&gt;
+		&lt;/div&gt;
+		&lt;!-- /ko --&gt;
+	&lt;/div&gt;
+&lt;/script&gt;
+&lt;script id="sortedColumnItemTemplate" type="text/html"&gt;
+	&lt;li class=""&gt;
+		&lt;div class="checkbox"&gt;
+			&lt;label&gt;
+				&lt;input type="checkbox" data-bind="checked: isVisible, click: function () { $parent.updateColumn($data); return true; }" /&gt;
+				&lt;span data-bind="text: name"&gt;&lt;/span&gt;
+			&lt;/label&gt;
+		&lt;/div&gt;
+	&lt;/li&gt;
+&lt;/script&gt;
+        </pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="showHideSortCss">
+        <pre>
+.showHideSortGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+.showHideSortGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+.showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li {border: 1px solid #dddddd;cursor: move;margin-bottom: 3px;padding: 0 6px;}
+.showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li.ui-sortable-helper  {border: #dddddd dashed 1px;}</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="showHideSortJs">
+        <pre>
+function ShowHideSortGridModel(root) {
+    var self = this;
+
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        autoHideFilter: true,
+        data: root.data,
+        templates: { columns: 'sortedColumnsTemplate' },
+        columns: ko.observableArray([
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Color',
+                    itemProperty: "color",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(false)
+                },
+                {
+                    name: 'Company Name',
+                    itemProperty: "companyName",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(false)
+                }
+        ])
+    });
+}</pre>
+    </div>
+</div>
+                </div>
+                
+                <div class="example">
+                    <style type="text/css">
+                        
+                    </style>
+                    <h1 id="test2">Basic Example</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /container -->
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/knockout-min.js"></script>
+    <script type="text/javascript" src="js/knockout-sortable.js"></script>
+    <script type="text/javascript" src="js//knockout-datagrid.js"></script>
+    <script type="text/javascript" src="js/model.js"></script>
+    
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+	
+	<script type="text/javascript">
+        $(function () {
+            
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            var model = new Model();
+            model.data(
+
+                [{ "id": 1, "firstName": "Christopher", "lastName": "Chavez", "email": "cchavez0@epa.gov", "gender": "Male", "iPaddress": "24.139.1.231", "color": "Purple", "companyName": "Leenti", "phone": "420-(109)467-6820", "mimeType": "video/x-msvideo", "domainName": "google.ca" },
+{ "id": 2, "firstName": "Thomas", "lastName": "Rose", "email": "trose1@myspace.com", "gender": "Male", "iPaddress": "41.31.93.126", "color": "Purple", "companyName": "Divavu", "phone": "46-(445)157-8349", "mimeType": "image/tiff", "domainName": "bluehost.com" },
+{ "id": 3, "firstName": "Laura", "lastName": "Hughes", "email": "lhughes2@shop-pro.jp", "gender": "Female", "iPaddress": "253.40.164.94", "color": "Goldenrod", "companyName": "Dabvine", "phone": "351-(868)721-8345", "mimeType": "video/msvideo", "domainName": "lycos.com" },
+{ "id": 4, "firstName": "Melissa", "lastName": "Medina", "email": "mmedina3@bravesites.com", "gender": "Female", "iPaddress": "56.32.191.133", "color": "Indigo", "companyName": "Jetwire", "phone": "1-(300)161-5071", "mimeType": "audio/x-mpeg-3", "domainName": "bandcamp.com" },
+{ "id": 5, "firstName": "Mark", "lastName": "Wells", "email": "mwells4@skype.com", "gender": "Male", "iPaddress": "66.118.187.136", "color": "Violet", "companyName": "Zoozzy", "phone": "86-(572)263-3892", "mimeType": "application/mspowerpoint", "domainName": "lulu.com" },
+{ "id": 6, "firstName": "Ronald", "lastName": "Boyd", "email": "rboyd5@uiuc.edu", "gender": "Male", "iPaddress": "162.60.143.161", "color": "Red", "companyName": "Meembee", "phone": "66-(962)495-4014", "mimeType": "application/excel", "domainName": "fotki.com" },
+{ "id": 7, "firstName": "Fred", "lastName": "Fisher", "email": "ffisher6@mediafire.com", "gender": "Male", "iPaddress": "65.97.90.16", "color": "Crimson", "companyName": "Mynte", "phone": "7-(467)752-4696", "mimeType": "application/x-troff-msvideo", "domainName": "apache.org" },
+{ "id": 8, "firstName": "Stephen", "lastName": "Fisher", "email": "sfisher7@dot.gov", "gender": "Male", "iPaddress": "241.59.115.207", "color": "Green", "companyName": "Leexo", "phone": "7-(697)375-7614", "mimeType": "application/vnd.ms-powerpoint", "domainName": "symantec.com" },
+{ "id": 9, "firstName": "Andrew", "lastName": "Myers", "email": "amyers8@cisco.com", "gender": "Male", "iPaddress": "253.95.64.209", "color": "Teal", "companyName": "Agivu", "phone": "58-(334)682-3585", "mimeType": "image/tiff", "domainName": "linkedin.com" },
+{ "id": 10, "firstName": "Kelly", "lastName": "Ray", "email": "kray9@columbia.edu", "gender": "Female", "iPaddress": "249.37.215.21", "color": "Aquamarine", "companyName": "Quatz", "phone": "84-(211)412-4773", "mimeType": "application/vnd.ms-powerpoint", "domainName": "washington.edu" },
+{ "id": 11, "firstName": "Christopher", "lastName": "King", "email": "ckinga@feedburner.com", "gender": "Male", "iPaddress": "34.227.163.12", "color": "Mauv", "companyName": "Brainbox", "phone": "86-(599)159-9052", "mimeType": "application/vnd.ms-excel", "domainName": "1688.com" },
+{ "id": 12, "firstName": "Keith", "lastName": "Andrews", "email": "kandrewsb@patch.com", "gender": "Male", "iPaddress": "15.121.30.69", "color": "Maroon", "companyName": "Thoughtsphere", "phone": "1-(423)989-2055", "mimeType": "video/x-mpeg", "domainName": "sun.com" },
+{ "id": 13, "firstName": "George", "lastName": "Simmons", "email": "gsimmonsc@bigcartel.com", "gender": "Male", "iPaddress": "45.229.133.139", "color": "Turquoise", "companyName": "Kwimbee", "phone": "48-(215)695-1985", "mimeType": "image/gif", "domainName": "dropbox.com" },
+{ "id": 14, "firstName": "Kathy", "lastName": "Chavez", "email": "kchavezd@g.co", "gender": "Female", "iPaddress": "129.119.203.153", "color": "Orange", "companyName": "Buzzster", "phone": "261-(561)770-4061", "mimeType": "application/msword", "domainName": "yahoo.co.jp" },
+{ "id": 15, "firstName": "Ernest", "lastName": "Ferguson", "email": "efergusone@engadget.com", "gender": "Male", "iPaddress": "236.198.5.162", "color": "Blue", "companyName": "Miboo", "phone": "33-(710)153-3466", "mimeType": "video/x-mpeg", "domainName": "cornell.edu" },
+{ "id": 16, "firstName": "Paula", "lastName": "Myers", "email": "pmyersf@ow.ly", "gender": "Female", "iPaddress": "148.70.251.196", "color": "Orange", "companyName": "Skimia", "phone": "33-(706)473-9979", "mimeType": "text/plain", "domainName": "tripadvisor.com" },
+{ "id": 17, "firstName": "Ralph", "lastName": "Johnson", "email": "rjohnsong@tripadvisor.com", "gender": "Male", "iPaddress": "92.47.62.48", "color": "Crimson", "companyName": "Tambee", "phone": "502-(821)396-2723", "mimeType": "image/png", "domainName": "spiegel.de" },
+{ "id": 18, "firstName": "Jimmy", "lastName": "Andrews", "email": "jandrewsh@bbb.org", "gender": "Male", "iPaddress": "87.221.220.126", "color": "Blue", "companyName": "Jabbersphere", "phone": "84-(277)431-6267", "mimeType": "application/x-mspowerpoint", "domainName": "slashdot.org" },
+{ "id": 19, "firstName": "Kevin", "lastName": "Ramirez", "email": "kramirezi@instagram.com", "gender": "Male", "iPaddress": "115.143.200.96", "color": "Blue", "companyName": "Yombu", "phone": "381-(827)829-4157", "mimeType": "video/mpeg", "domainName": "is.gd" },
+{ "id": 20, "firstName": "Joe", "lastName": "Gardner", "email": "jgardnerj@ocn.ne.jp", "gender": "Male", "iPaddress": "229.54.163.86", "color": "Orange", "companyName": "Oyoyo", "phone": "33-(108)498-7072", "mimeType": "video/quicktime", "domainName": "booking.com" },
+{ "id": 21, "firstName": "Lillian", "lastName": "Warren", "email": "lwarrenk@adobe.com", "gender": "Female", "iPaddress": "237.237.97.53", "color": "Blue", "companyName": "Youopia", "phone": "420-(937)406-7046", "mimeType": "image/x-tiff", "domainName": "bbb.org" },
+{ "id": 22, "firstName": "Judy", "lastName": "Hansen", "email": "jhansenl@usatoday.com", "gender": "Female", "iPaddress": "40.227.189.177", "color": "Khaki", "companyName": "Plambee", "phone": "62-(980)655-5555", "mimeType": "audio/mpeg3", "domainName": "ocn.ne.jp" },
+{ "id": 23, "firstName": "Jonathan", "lastName": "Patterson", "email": "jpattersonm@washington.edu", "gender": "Male", "iPaddress": "121.12.31.199", "color": "Khaki", "companyName": "Aimbo", "phone": "63-(456)892-0499", "mimeType": "video/avi", "domainName": "so-net.ne.jp" },
+{ "id": 24, "firstName": "Joe", "lastName": "Taylor", "email": "jtaylorn@last.fm", "gender": "Male", "iPaddress": "53.89.16.244", "color": "Orange", "companyName": "Voonix", "phone": "62-(663)217-4962", "mimeType": "video/mpeg", "domainName": "flavors.me" },
+{ "id": 25, "firstName": "Clarence", "lastName": "Gonzales", "email": "cgonzaleso@si.edu", "gender": "Male", "iPaddress": "154.0.165.121", "color": "Yellow", "companyName": "Centidel", "phone": "86-(873)708-8510", "mimeType": "application/x-msexcel", "domainName": "jimdo.com" },
+{ "id": 26, "firstName": "Rebecca", "lastName": "Fernandez", "email": "rfernandezp@hostgator.com", "gender": "Female", "iPaddress": "18.6.62.63", "color": "Puce", "companyName": "Meedoo", "phone": "351-(129)544-3746", "mimeType": "image/tiff", "domainName": "ucoz.com" },
+{ "id": 27, "firstName": "Andrea", "lastName": "Shaw", "email": "ashawq@harvard.edu", "gender": "Female", "iPaddress": "45.87.142.60", "color": "Indigo", "companyName": "Oyoba", "phone": "7-(444)840-6297", "mimeType": "application/x-excel", "domainName": "posterous.com" },
+{ "id": 28, "firstName": "Craig", "lastName": "King", "email": "ckingr@mail.ru", "gender": "Male", "iPaddress": "20.230.12.159", "color": "Violet", "companyName": "Layo", "phone": "62-(468)508-9331", "mimeType": "video/avi", "domainName": "a8.net" },
+{ "id": 29, "firstName": "Jerry", "lastName": "Harvey", "email": "jharveys@biglobe.ne.jp", "gender": "Male", "iPaddress": "108.250.0.124", "color": "Blue", "companyName": "Fanoodle", "phone": "62-(900)260-1844", "mimeType": "audio/mpeg3", "domainName": "ezinearticles.com" },
+{ "id": 30, "firstName": "Jesse", "lastName": "Day", "email": "jdayt@example.com", "gender": "Male", "iPaddress": "220.89.206.20", "color": "Puce", "companyName": "Fadeo", "phone": "86-(629)947-8347", "mimeType": "video/msvideo", "domainName": "google.ru" },
+{ "id": 31, "firstName": "Judith", "lastName": "Peters", "email": "jpetersu@cargocollective.com", "gender": "Female", "iPaddress": "152.184.138.137", "color": "Orange", "companyName": "Centimia", "phone": "86-(603)916-6913", "mimeType": "application/mspowerpoint", "domainName": "qq.com" },
+{ "id": 32, "firstName": "Jimmy", "lastName": "Montgomery", "email": "jmontgomeryv@reference.com", "gender": "Male", "iPaddress": "30.71.149.134", "color": "Blue", "companyName": "Brightdog", "phone": "420-(962)617-3018", "mimeType": "application/x-troff-msvideo", "domainName": "go.com" },
+{ "id": 33, "firstName": "Lawrence", "lastName": "Flores", "email": "lfloresw@newyorker.com", "gender": "Male", "iPaddress": "121.114.21.22", "color": "Turquoise", "companyName": "Jabbercube", "phone": "505-(964)790-8618", "mimeType": "video/x-mpeg", "domainName": "flickr.com" },
+{ "id": 34, "firstName": "Karen", "lastName": "Fisher", "email": "kfisherx@columbia.edu", "gender": "Female", "iPaddress": "73.154.112.101", "color": "Fuscia", "companyName": "Youbridge", "phone": "7-(625)370-5525", "mimeType": "audio/mpeg3", "domainName": "hibu.com" },
+{ "id": 35, "firstName": "Alice", "lastName": "Lane", "email": "alaney@apache.org", "gender": "Female", "iPaddress": "234.148.84.98", "color": "Violet", "companyName": "Flashdog", "phone": "55-(640)614-4455", "mimeType": "video/msvideo", "domainName": "addthis.com" },
+{ "id": 36, "firstName": "Carl", "lastName": "Peterson", "email": "cpetersonz@shutterfly.com", "gender": "Male", "iPaddress": "230.170.10.181", "color": "Red", "companyName": "Dynava", "phone": "86-(566)291-7533", "mimeType": "image/jpeg", "domainName": "geocities.com" },
+{ "id": 37, "firstName": "Amy", "lastName": "Wheeler", "email": "awheeler10@noaa.gov", "gender": "Female", "iPaddress": "200.91.74.129", "color": "Violet", "companyName": "Realcube", "phone": "86-(881)901-5651", "mimeType": "application/x-troff-msvideo", "domainName": "wikia.com" },
+{ "id": 38, "firstName": "Adam", "lastName": "Austin", "email": "aaustin11@apache.org", "gender": "Male", "iPaddress": "138.224.50.165", "color": "Turquoise", "companyName": "Twimm", "phone": "385-(966)662-7299", "mimeType": "video/mpeg", "domainName": "webeden.co.uk" },
+{ "id": 39, "firstName": "Tammy", "lastName": "Lee", "email": "tlee12@webs.com", "gender": "Female", "iPaddress": "44.125.4.246", "color": "Puce", "companyName": "Myworks", "phone": "54-(615)785-5958", "mimeType": "application/x-troff-msvideo", "domainName": "marriott.com" },
+{ "id": 40, "firstName": "Sarah", "lastName": "Garcia", "email": "sgarcia13@liveinternet.ru", "gender": "Female", "iPaddress": "199.31.93.251", "color": "Mauv", "companyName": "Avamm", "phone": "252-(133)362-8917", "mimeType": "image/tiff", "domainName": "usda.gov" },
+{ "id": 41, "firstName": "Randy", "lastName": "Perkins", "email": "rperkins14@zimbio.com", "gender": "Male", "iPaddress": "183.190.8.176", "color": "Violet", "companyName": "Gigaclub", "phone": "234-(181)391-3689", "mimeType": "application/x-mspowerpoint", "domainName": "nifty.com" },
+{ "id": 42, "firstName": "Deborah", "lastName": "Bishop", "email": "dbishop15@scribd.com", "gender": "Female", "iPaddress": "205.45.145.171", "color": "Indigo", "companyName": "Yoveo", "phone": "63-(276)495-0057", "mimeType": "application/vnd.ms-excel", "domainName": "army.mil" },
+{ "id": 43, "firstName": "Annie", "lastName": "Baker", "email": "abaker16@biglobe.ne.jp", "gender": "Female", "iPaddress": "126.114.151.152", "color": "Fuscia", "companyName": "Reallinks", "phone": "220-(211)375-2545", "mimeType": "application/pdf", "domainName": "phpbb.com" },
+{ "id": 44, "firstName": "Henry", "lastName": "Ramos", "email": "hramos17@hugedomains.com", "gender": "Male", "iPaddress": "134.227.103.104", "color": "Yellow", "companyName": "Thoughtbridge", "phone": "86-(946)164-8358", "mimeType": "application/vnd.ms-powerpoint", "domainName": "deviantart.com" },
+{ "id": 45, "firstName": "Timothy", "lastName": "Rogers", "email": "trogers18@prnewswire.com", "gender": "Male", "iPaddress": "111.133.193.193", "color": "Yellow", "companyName": "Yodoo", "phone": "58-(570)668-0403", "mimeType": "application/excel", "domainName": "scientificamerican.com" },
+{ "id": 46, "firstName": "Christina", "lastName": "Kim", "email": "ckim19@redcross.org", "gender": "Female", "iPaddress": "238.210.139.13", "color": "Fuscia", "companyName": "Mynte", "phone": "62-(841)166-3491", "mimeType": "audio/x-mpeg-3", "domainName": "sakura.ne.jp" },
+{ "id": 47, "firstName": "Louis", "lastName": "Palmer", "email": "lpalmer1a@mashable.com", "gender": "Male", "iPaddress": "223.56.170.74", "color": "Maroon", "companyName": "Quatz", "phone": "7-(571)769-5265", "mimeType": "video/x-mpeg", "domainName": "hp.com" },
+{ "id": 48, "firstName": "Janet", "lastName": "Oliver", "email": "joliver1b@cyberchimps.com", "gender": "Female", "iPaddress": "100.153.80.169", "color": "Yellow", "companyName": "Zoomcast", "phone": "62-(890)323-6003", "mimeType": "application/vnd.ms-excel", "domainName": "wsj.com" },
+{ "id": 49, "firstName": "Helen", "lastName": "Perez", "email": "hperez1c@elpais.com", "gender": "Female", "iPaddress": "156.37.73.183", "color": "Khaki", "companyName": "Edgetag", "phone": "48-(196)402-9147", "mimeType": "video/quicktime", "domainName": "state.tx.us" },
+{ "id": 50, "firstName": "Jerry", "lastName": "Lopez", "email": "jlopez1d@ebay.com", "gender": "Male", "iPaddress": "1.235.115.174", "color": "Yellow", "companyName": "Kwilith", "phone": "7-(947)341-0410", "mimeType": "video/avi", "domainName": "desdev.cn" },
+{ "id": 51, "firstName": "Anne", "lastName": "Hudson", "email": "ahudson1e@harvard.edu", "gender": "Female", "iPaddress": "19.134.168.155", "color": "Goldenrod", "companyName": "Browseblab", "phone": "62-(138)271-4625", "mimeType": "application/x-mspowerpoint", "domainName": "home.pl" },
+{ "id": 52, "firstName": "Carl", "lastName": "Kim", "email": "ckim1f@abc.net.au", "gender": "Male", "iPaddress": "32.207.160.143", "color": "Green", "companyName": "Jabbercube", "phone": "62-(103)616-8821", "mimeType": "video/quicktime", "domainName": "answers.com" },
+{ "id": 53, "firstName": "Michelle", "lastName": "Bennett", "email": "mbennett1g@yale.edu", "gender": "Female", "iPaddress": "193.168.224.140", "color": "Violet", "companyName": "Edgepulse", "phone": "7-(154)232-2656", "mimeType": "text/plain", "domainName": "is.gd" },
+{ "id": 54, "firstName": "Deborah", "lastName": "Watkins", "email": "dwatkins1h@studiopress.com", "gender": "Female", "iPaddress": "17.149.207.12", "color": "Teal", "companyName": "Meedoo", "phone": "63-(332)651-1950", "mimeType": "application/powerpoint", "domainName": "dion.ne.jp" },
+{ "id": 55, "firstName": "Johnny", "lastName": "Torres", "email": "jtorres1i@technorati.com", "gender": "Male", "iPaddress": "244.11.56.219", "color": "Aquamarine", "companyName": "Gabvine", "phone": "82-(541)844-3284", "mimeType": "audio/mpeg3", "domainName": "deviantart.com" },
+{ "id": 56, "firstName": "Barbara", "lastName": "Jones", "email": "bjones1j@angelfire.com", "gender": "Female", "iPaddress": "184.65.166.171", "color": "Pink", "companyName": "Rhyloo", "phone": "86-(511)120-3760", "mimeType": "application/mspowerpoint", "domainName": "usa.gov" },
+{ "id": 57, "firstName": "Brandon", "lastName": "Harris", "email": "bharris1k@addtoany.com", "gender": "Male", "iPaddress": "123.252.251.118", "color": "Puce", "companyName": "Meejo", "phone": "420-(386)938-9066", "mimeType": "audio/mpeg3", "domainName": "spiegel.de" },
+{ "id": 58, "firstName": "Mildred", "lastName": "Arnold", "email": "marnold1l@hugedomains.com", "gender": "Female", "iPaddress": "162.243.122.139", "color": "Violet", "companyName": "Bubblebox", "phone": "420-(730)738-4091", "mimeType": "video/mpeg", "domainName": "soup.io" },
+{ "id": 59, "firstName": "Aaron", "lastName": "Barnes", "email": "abarnes1m@telegraph.co.uk", "gender": "Male", "iPaddress": "231.172.181.180", "color": "Pink", "companyName": "Innojam", "phone": "54-(694)300-4237", "mimeType": "application/msword", "domainName": "usda.gov" },
+{ "id": 60, "firstName": "Ruby", "lastName": "Carpenter", "email": "rcarpenter1n@liveinternet.ru", "gender": "Female", "iPaddress": "251.149.39.30", "color": "Turquoise", "companyName": "Devpoint", "phone": "62-(100)586-3787", "mimeType": "application/x-mspowerpoint", "domainName": "fotki.com" },
+{ "id": 61, "firstName": "Andrew", "lastName": "Hunt", "email": "ahunt1o@thetimes.co.uk", "gender": "Male", "iPaddress": "116.157.111.152", "color": "Violet", "companyName": "Brightbean", "phone": "95-(576)906-7731", "mimeType": "video/mpeg", "domainName": "slashdot.org" },
+{ "id": 62, "firstName": "Mary", "lastName": "Little", "email": "mlittle1p@yahoo.co.jp", "gender": "Female", "iPaddress": "31.195.102.88", "color": "Blue", "companyName": "Roomm", "phone": "30-(345)227-0090", "mimeType": "application/mspowerpoint", "domainName": "icio.us" },
+{ "id": 63, "firstName": "Diana", "lastName": "Stewart", "email": "dstewart1q@oracle.com", "gender": "Female", "iPaddress": "66.165.162.119", "color": "Red", "companyName": "Eamia", "phone": "84-(798)143-7777", "mimeType": "application/msword", "domainName": "dell.com" },
+{ "id": 64, "firstName": "Aaron", "lastName": "Morrison", "email": "amorrison1r@theguardian.com", "gender": "Male", "iPaddress": "41.129.10.25", "color": "Violet", "companyName": "Livetube", "phone": "86-(440)236-7977", "mimeType": "image/jpeg", "domainName": "geocities.com" },
+{ "id": 65, "firstName": "Craig", "lastName": "Morales", "email": "cmorales1s@cam.ac.uk", "gender": "Male", "iPaddress": "95.149.34.91", "color": "Mauv", "companyName": "Eamia", "phone": "51-(348)723-5022", "mimeType": "application/powerpoint", "domainName": "multiply.com" },
+{ "id": 66, "firstName": "Carolyn", "lastName": "Hudson", "email": "chudson1t@time.com", "gender": "Female", "iPaddress": "23.228.12.93", "color": "Orange", "companyName": "Ntag", "phone": "63-(761)190-2769", "mimeType": "application/x-mspowerpoint", "domainName": "acquirethisname.com" },
+{ "id": 67, "firstName": "Lawrence", "lastName": "Medina", "email": "lmedina1u@pbs.org", "gender": "Male", "iPaddress": "176.162.156.134", "color": "Yellow", "companyName": "Babblestorm", "phone": "86-(680)670-1642", "mimeType": "video/quicktime", "domainName": "ed.gov" },
+{ "id": 68, "firstName": "Chris", "lastName": "Gibson", "email": "cgibson1v@altervista.org", "gender": "Male", "iPaddress": "97.21.185.227", "color": "Aquamarine", "companyName": "Rooxo", "phone": "86-(161)174-0877", "mimeType": "video/mpeg", "domainName": "rambler.ru" },
+{ "id": 69, "firstName": "Sean", "lastName": "Porter", "email": "sporter1w@paginegialle.it", "gender": "Male", "iPaddress": "18.126.57.137", "color": "Teal", "companyName": "Trudeo", "phone": "254-(698)627-5160", "mimeType": "application/vnd.ms-powerpoint", "domainName": "discovery.com" },
+{ "id": 70, "firstName": "James", "lastName": "Morgan", "email": "jmorgan1x@yahoo.co.jp", "gender": "Male", "iPaddress": "6.17.27.46", "color": "Orange", "companyName": "Voolia", "phone": "86-(978)768-6190", "mimeType": "image/tiff", "domainName": "ning.com" },
+{ "id": 71, "firstName": "Julie", "lastName": "Garza", "email": "jgarza1y@mediafire.com", "gender": "Female", "iPaddress": "229.211.236.16", "color": "Aquamarine", "companyName": "Wikizz", "phone": "86-(384)739-0996", "mimeType": "video/avi", "domainName": "ucla.edu" },
+{ "id": 72, "firstName": "Larry", "lastName": "Hanson", "email": "lhanson1z@buzzfeed.com", "gender": "Male", "iPaddress": "140.101.167.88", "color": "Teal", "companyName": "Zoonder", "phone": "86-(744)832-0310", "mimeType": "audio/mpeg3", "domainName": "rakuten.co.jp" },
+{ "id": 73, "firstName": "Benjamin", "lastName": "Long", "email": "blong20@sina.com.cn", "gender": "Male", "iPaddress": "163.127.107.241", "color": "Aquamarine", "companyName": "Buzzshare", "phone": "86-(759)863-9241", "mimeType": "audio/x-mpeg-3", "domainName": "mapquest.com" },
+{ "id": 74, "firstName": "Rachel", "lastName": "Smith", "email": "rsmith21@smugmug.com", "gender": "Female", "iPaddress": "156.231.37.21", "color": "Blue", "companyName": "Zoomzone", "phone": "86-(711)350-7200", "mimeType": "application/powerpoint", "domainName": "goodreads.com" },
+{ "id": 75, "firstName": "Judy", "lastName": "Frazier", "email": "jfrazier22@scribd.com", "gender": "Female", "iPaddress": "245.1.226.226", "color": "Yellow", "companyName": "Zoovu", "phone": "420-(470)534-3159", "mimeType": "audio/x-mpeg-3", "domainName": "tmall.com" },
+{ "id": 76, "firstName": "Edward", "lastName": "Rogers", "email": "erogers23@twitpic.com", "gender": "Male", "iPaddress": "42.180.255.142", "color": "Purple", "companyName": "Wordware", "phone": "86-(923)666-1344", "mimeType": "application/pdf", "domainName": "sohu.com" },
+{ "id": 77, "firstName": "Terry", "lastName": "Morris", "email": "tmorris24@opera.com", "gender": "Male", "iPaddress": "57.154.194.198", "color": "Goldenrod", "companyName": "Demizz", "phone": "46-(190)604-7070", "mimeType": "application/msword", "domainName": "wp.com" },
+{ "id": 78, "firstName": "Jesse", "lastName": "Little", "email": "jlittle25@woothemes.com", "gender": "Male", "iPaddress": "76.115.182.128", "color": "Orange", "companyName": "Leexo", "phone": "86-(438)879-0234", "mimeType": "image/png", "domainName": "icio.us" },
+{ "id": 79, "firstName": "Dorothy", "lastName": "Jenkins", "email": "djenkins26@wired.com", "gender": "Female", "iPaddress": "243.174.218.138", "color": "Puce", "companyName": "Wikivu", "phone": "48-(624)742-2732", "mimeType": "application/powerpoint", "domainName": "bbb.org" },
+{ "id": 80, "firstName": "Patricia", "lastName": "Fernandez", "email": "pfernandez27@ox.ac.uk", "gender": "Female", "iPaddress": "163.95.242.70", "color": "Aquamarine", "companyName": "Photolist", "phone": "381-(768)408-7002", "mimeType": "text/plain", "domainName": "comcast.net" },
+{ "id": 81, "firstName": "Betty", "lastName": "Watson", "email": "bwatson28@mozilla.com", "gender": "Female", "iPaddress": "179.31.2.119", "color": "Turquoise", "companyName": "Avamm", "phone": "86-(480)252-2297", "mimeType": "video/quicktime", "domainName": "rambler.ru" },
+{ "id": 82, "firstName": "Andrew", "lastName": "Perry", "email": "aperry29@hostgator.com", "gender": "Male", "iPaddress": "181.182.57.6", "color": "Puce", "companyName": "Twinte", "phone": "47-(373)739-1518", "mimeType": "image/gif", "domainName": "census.gov" },
+{ "id": 83, "firstName": "Robert", "lastName": "Payne", "email": "rpayne2a@vistaprint.com", "gender": "Male", "iPaddress": "159.216.226.69", "color": "Mauv", "companyName": "Bubblebox", "phone": "86-(626)568-3706", "mimeType": "video/x-mpeg", "domainName": "bluehost.com" },
+{ "id": 84, "firstName": "Michael", "lastName": "Dixon", "email": "mdixon2b@chronoengine.com", "gender": "Male", "iPaddress": "8.152.211.101", "color": "Violet", "companyName": "Gabvine", "phone": "63-(505)623-7525", "mimeType": "video/mpeg", "domainName": "creativecommons.org" },
+{ "id": 85, "firstName": "Jack", "lastName": "Carter", "email": "jcarter2c@bloglines.com", "gender": "Male", "iPaddress": "104.245.2.143", "color": "Green", "companyName": "Aimbo", "phone": "880-(969)515-6973", "mimeType": "application/mspowerpoint", "domainName": "ebay.com" },
+{ "id": 86, "firstName": "Louis", "lastName": "Bishop", "email": "lbishop2d@qq.com", "gender": "Male", "iPaddress": "30.88.180.220", "color": "Khaki", "companyName": "Skaboo", "phone": "56-(793)193-6603", "mimeType": "image/pjpeg", "domainName": "infoseek.co.jp" },
+{ "id": 87, "firstName": "Lori", "lastName": "Tucker", "email": "ltucker2e@goo.gl", "gender": "Female", "iPaddress": "43.244.159.5", "color": "Aquamarine", "companyName": "Voolith", "phone": "54-(117)772-7824", "mimeType": "text/plain", "domainName": "flavors.me" },
+{ "id": 88, "firstName": "Jerry", "lastName": "Robertson", "email": "jrobertson2f@tinyurl.com", "gender": "Male", "iPaddress": "112.55.234.21", "color": "Aquamarine", "companyName": "Meetz", "phone": "49-(300)652-5456", "mimeType": "video/quicktime", "domainName": "trellian.com" },
+{ "id": 89, "firstName": "Rebecca", "lastName": "Wood", "email": "rwood2g@barnesandnoble.com", "gender": "Female", "iPaddress": "139.225.103.76", "color": "Yellow", "companyName": "Dynazzy", "phone": "51-(110)274-1273", "mimeType": "application/x-troff-msvideo", "domainName": "is.gd" },
+{ "id": 90, "firstName": "Steven", "lastName": "Gardner", "email": "sgardner2h@dailymail.co.uk", "gender": "Male", "iPaddress": "81.120.175.128", "color": "Teal", "companyName": "Oloo", "phone": "86-(100)296-5769", "mimeType": "image/png", "domainName": "wikimedia.org" },
+{ "id": 91, "firstName": "Gregory", "lastName": "Riley", "email": "griley2i@epa.gov", "gender": "Male", "iPaddress": "106.193.218.241", "color": "Yellow", "companyName": "Zoombeat", "phone": "62-(167)702-0960", "mimeType": "video/quicktime", "domainName": "addthis.com" },
+{ "id": 92, "firstName": "Elizabeth", "lastName": "Martin", "email": "emartin2j@tripadvisor.com", "gender": "Female", "iPaddress": "43.168.38.210", "color": "Violet", "companyName": "Avamm", "phone": "86-(359)650-7641", "mimeType": "video/x-mpeg", "domainName": "prnewswire.com" },
+{ "id": 93, "firstName": "Eric", "lastName": "Dunn", "email": "edunn2k@newyorker.com", "gender": "Male", "iPaddress": "72.135.223.123", "color": "Aquamarine", "companyName": "Thoughtsphere", "phone": "66-(169)221-4659", "mimeType": "video/avi", "domainName": "stanford.edu" },
+{ "id": 94, "firstName": "Linda", "lastName": "Peterson", "email": "lpeterson2l@w3.org", "gender": "Female", "iPaddress": "189.217.150.221", "color": "Purple", "companyName": "Zoomzone", "phone": "55-(681)307-6707", "mimeType": "video/msvideo", "domainName": "ning.com" },
+{ "id": 95, "firstName": "Juan", "lastName": "Ramirez", "email": "jramirez2m@ucoz.ru", "gender": "Male", "iPaddress": "41.106.232.222", "color": "Blue", "companyName": "Skalith", "phone": "66-(142)847-9567", "mimeType": "video/mpeg", "domainName": "globo.com" },
+{ "id": 96, "firstName": "Betty", "lastName": "Evans", "email": "bevans2n@noaa.gov", "gender": "Female", "iPaddress": "245.22.143.132", "color": "Aquamarine", "companyName": "Wikibox", "phone": "86-(519)111-7249", "mimeType": "application/vnd.ms-excel", "domainName": "trellian.com" },
+{ "id": 97, "firstName": "Lisa", "lastName": "Hernandez", "email": "lhernandez2o@biglobe.ne.jp", "gender": "Female", "iPaddress": "104.152.213.37", "color": "Purple", "companyName": "Photofeed", "phone": "1-(975)706-4894", "mimeType": "video/x-mpeg", "domainName": "freewebs.com" },
+{ "id": 98, "firstName": "Jack", "lastName": "Mcdonald", "email": "jmcdonald2p@prweb.com", "gender": "Male", "iPaddress": "186.116.115.217", "color": "Orange", "companyName": "Fliptune", "phone": "86-(959)986-1672", "mimeType": "application/x-excel", "domainName": "youtu.be" },
+{ "id": 99, "firstName": "Nicole", "lastName": "Hudson", "email": "nhudson2q@utexas.edu", "gender": "Female", "iPaddress": "35.57.234.79", "color": "Fuscia", "companyName": "Devpulse", "phone": "216-(472)375-5902", "mimeType": "image/gif", "domainName": "github.com" },
+{ "id": 100, "firstName": "Richard", "lastName": "Taylor", "email": "rtaylor2r@lulu.com", "gender": "Male", "iPaddress": "241.87.93.240", "color": "Mauv", "companyName": "Meevee", "phone": "62-(414)815-5074", "mimeType": "application/x-msexcel", "domainName": "google.es" }]
+
+                );
+
+            ko.applyBindings(model);
+        });
+    </script>
+
+</body>
+</html>
