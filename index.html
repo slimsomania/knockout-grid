@@ -83,27 +83,44 @@
             <div class="col-md-3" role="complementary">
                 <nav id="bs-docs-sidebar" class="bs-docs-sidebar" data-spy="affix" data-offset-top="331">
                     <ul class="nav nav-pills nav-stacked">
-                        <li><a href="#default"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Default</a></li>
-                        <li><a href="#sortable"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Sortable</a></li>
-                        <li><a href="#showHide"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Show/Hide</a></li>
-                        <li><a href="#filterable"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Filterable </a></li>
-                        <li><a href="#filterableComplex"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Filterable Complex </a></li>
-                        <li><a href="#customeTemplates"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Custome templates </a></li>
-                        <li><a href="#showHideSort"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Show/Hide sort </a></li>
+                        <li><a href="#setup"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Initial setup</a></li>
+                        <li><a href="#default"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Default view</a></li>
+                        <li><a href="#highlighted"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Highlighted view</a></li>
+                        <li><a href="#sortable"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Sortable view</a></li>
+                        <li><a href="#filterableBasic"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Filterable view</a></li>
+                        <li><a href="#filterableComplex"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Filterable Complex</a></li>
+                        <li><a href="#showHide"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Show/Hide columns</a></li>
+                        <li><a href="#sortColumns"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Sortable columns</a></li>
+                        <li><a href="#customeTemplates"><i class="glyphicon glyphicon-chevron-right pull-right"></i>Custome templates</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="col-md-9" role="main">
                 <div class="example">
+                    <h1 id="setup">Initial setup</h1>
+                    <div class="alert alert-info">
+                    <p>Every example has a predefined set of options.</p>
+                    <p>They are the following:<br /><br /></p>
+<pre>
+{
+    defaultSortField: "id",
+    defaultSortOrder: "asc",
+    tableGridClass: "table-striped table-hover",
+    pageSize: 10
+}
+</pre>
+                    </div>
+                </div>
+                <div class="example">
                     <style type="text/css">
                        .defaultGridView .dataGrid div.dataGridColumnsContainer { display: none; }
                        .defaultGridView .dataGrid table thead tr:last-child { display: none; }
-                       .defaultGridView .dataGrid table tr { background-color: #dff0d8; }
-                       .defaultGridView .dataGrid table tr.highlight { background-color: #d9edf7; }
-                       .defaultGridView .dataGrid table tr.highlight td.highlight { background-color: #fcf8e3; }
                     </style>
-                    <h1 id="default">Basic Example</h1>
-                    <div class="defaultGridView" data-bind="dataGrid: defaultGrid.gridView"></div>
+                    <h1 id="default">Default view</h1>
+                    <p>Basic example with paging.</p>
+                    <!-- ko with: highlightedGrid -->
+                    <div class="defaultGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko -->
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
@@ -115,25 +132,24 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="defaultHtml">
-        <pre>&lt;div class=&quot;defaultGridView&quot; data-bind=&quot;dataGrid: defaultGrid&quot;&gt;&lt;/div&gt;</pre>
+<pre>
+&lt;div class="defaultGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
+</pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="defaultCss">
-        <pre>
+<pre>
 .defaultGridView .dataGrid div.dataGridColumnsContainer { display: none; }
 .defaultGridView .dataGrid table thead tr:last-child { display: none; }
-.defaultGridView .dataGrid table tr { background-color: #dff0d8; }
-.defaultGridView .dataGrid table tr.highlight { background-color: #d9edf7; }
-.defaultGridView .dataGrid table tr.highlight td.highlight { background-color: #fcf8e3; }</pre>
+</pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="defaultJs">
-        <pre>
+<pre>
 function DefaultGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
         defaultSortField: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
-        highlightRow: function (i) { return i.gender.indexOf("Male") > -1 },
         pageSize: 10,
         data: root.data,
         columns: [
@@ -159,8 +175,7 @@ function DefaultGridModel(root) {
                     name: 'Email',
                     itemProperty: "email",
                     itemCellClass: "emailItem",
-                    isVisible: true,
-                    highlightCell: function (i) { return i.email.indexOf("com") > -1 },
+                    isVisible: true
                 },
                 {
                     name: 'Gender',
@@ -176,21 +191,118 @@ function DefaultGridModel(root) {
                 }
         ]
     });
-}</pre>
+}
+</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                       .highlightedGridView .dataGrid div.dataGridColumnsContainer { display: none; }
+                       .highlightedGridView .dataGrid table thead tr:last-child { display: none; }
+                       .highlightedGridView .dataGrid table tr { background-color: #dff0d8; }
+                       .highlightedGridView .dataGrid table tr.highlight { background-color: #d9edf7; }
+                       .highlightedGridView .dataGrid table tr.highlight td.highlight { background-color: #fcf8e3; }
+                    </style>
+                    <h1 id="highlighted">Highlighted view</h1>
+                    <p>Highlight table rows and cells when the conditions are met.</p>
+                    <!-- ko with: highlightedGrid -->
+                    <div class="highlightedGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko -->
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#highlightedHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#highlightedCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#highlightedJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="highlightedHtml">
+<pre>
+&lt;div class="highlightedGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
+</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="highlightedCss">
+<pre>
+.highlightedGridView .dataGrid div.dataGridColumnsContainer { display: none; }
+.highlightedGridView .dataGrid table thead tr:last-child { display: none; }
+.highlightedGridView .dataGrid table tr { background-color: #dff0d8; }
+.highlightedGridView .dataGrid table tr.highlight { background-color: #d9edf7; }
+.highlightedGridView .dataGrid table tr.highlight td.highlight { background-color: #fcf8e3; }
+</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="highlightedJs">
+<pre>
+function HighlightedGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        highlightRow: function (i) { return i.gender.indexOf("Male") > -1 },
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    highlightCell: function (i) { return i.email.indexOf("com") > -1 },
+                    isVisible: true
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true
+                }
+        ]
+    });
+}
+</pre>
     </div>
 </div>
                 </div>
                 <div class="example">
                     <style type="text/css">
                         .sortableGridView .dataGrid .dataGridColumnsContainer {display: none;}
-                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
-                        .sortableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
-                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
-                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
-                        .sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+                        .sortableGridView .dataGrid table.dataGridTable thead tr th.active,
+                        .sortableGridView .dataGrid table.dataGridTable tbody tr td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .sortableGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .sortableGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .sortableGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
                     </style>
-                    <h1 id="sortable">Sortable table</h1>
-                    <div class="sortableGridView" data-bind="dataGrid: sortableGrid.gridView"></div>
+                    <h1 id="sortable">Sortable view</h1>
+                    <p>Sort items of the table columns by ascending/descending and highlight the sorted column.</p>
+                    <p>To sort column items click on the <i class="glyphicon glyphicon-sort"></i> icon.</p>
+                    <!-- ko with: sortableGrid -->
+                    <div class="sortableGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko --><
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
@@ -202,17 +314,19 @@ function DefaultGridModel(root) {
 <!-- Tab panes -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="sortableHtml">
-        <pre>
-&lt;div class=&quot;sortableGridView&quot; data-bind=&quot;dataGrid: sortableGrid.gridView&quot;&gt;&lt;/div&gt;</pre>
+<pre>
+&lt;div class="sortableGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
+</pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="sortableCss">
-        <pre>
+<pre>
 .sortableGridView .dataGrid .dataGridColumnsContainer {display: none;}
-.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
-.sortableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
-.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
-.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
-.sortableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}</pre>
+.sortableGridView .dataGrid table.dataGridTable thead tr th.active,
+.sortableGridView .dataGrid table.dataGridTable tbody tr td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.sortableGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.sortableGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.sortableGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+</pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="sortableJs">
         <pre>
@@ -275,107 +389,19 @@ function SortableGridModel(root) {
                 </div>
                 <div class="example">
                     <style type="text/css">
-                        .showHideGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
-                        .showHideGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+                        .filterableBasicGridView .dataGrid .dataGridColumnsContainer {display: none;}
+                        .filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active,
+                        .filterableBasicGridView .dataGrid table.dataGridTable > tbody tr td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
                     </style>
-                    <h1 id="showHide">Show/Hide columns</h1>
-                    <div class="showHideGridView" data-bind="dataGrid: showHideGrid.gridView"></div>
-
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#showHideleHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
-    <li role="presentation"><a href="#showHideCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
-    <li role="presentation"><a href="#showHideJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
-</ul>
-
-<!-- Tab panes -->
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="showHideleHtml">
-        <pre>
-&lt;div class=&quot;showHideGridView&quot; data-bind=&quot;dataGrid: showHideGrid.gridView&quot;&gt;&lt;/div&gt;</pre>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="showHideCss">
-        <pre>
-.showHideGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
-.showHideGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }</pre>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="showHideJs">
-        <pre>
-function ShowHideGridModel(root) {
-    var self = this;
-    self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
-        defaultSortOrder: "asc",
-        tableGridClass: "table-striped table-hover",
-        pageSize: 10,
-        autoHideFilter: true,
-        data: root.data,
-        columns: [
-                {
-                    name: 'Id',
-                    itemProperty: "id",
-                    itemCellClass: "idItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'First name',
-                    itemProperty: "firstName",
-                    itemCellClass: "firstNameItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Last name',
-                    itemProperty: "lastName",
-                    itemCellClass: "lastNameItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Email',
-                    itemProperty: "email",
-                    itemCellClass: "emailItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Gender',
-                    itemProperty: "gender",
-                    itemCellClass: "genderItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'IP address',
-                    itemProperty: "iPaddress",
-                    itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Color',
-                    itemProperty: "color",
-                    itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(false)
-                },
-                {
-                    name: 'Company Name',
-                    itemProperty: "companyName",
-                    itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(false)
-                }
-        ]
-    });
-}</pre>
-    </div>
-</div>
-                </div>
-                <div class="example">
-                    <style type="text/css">                        
-                        .filterableGridView .dataGrid .dataGridColumnsContainer {display: none;}
-                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
-                        .filterableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
-                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
-                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
-                        .filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
-                    </style>
-                    <h1 id="filterable">Filterable table</h1>
-                    <div class="filterableGridView" data-bind="dataGrid: filterGrid.gridView"></div>
+                    <h1 id="filterableBasic">Filterable view</h1>
+                    <p>Filter table items by value, range or starts with and highlight the filtered column.</p>
+                    <p>To open the filter, click on the <i class="fa fa-filter"></i> icon.</p>
+                    <!-- ko with: FilterBasicGrid -->
+                    <div class="filterableBasicGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko -->
 
                     <script id="filterStringTemplate" type="text/html">
                         <form class="row" style="min-width: 250px;">
@@ -449,7 +475,7 @@ function ShowHideGridModel(root) {
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" data-bind="checkedValue: $data, checked: $parent.q" />
-                                                <span data-bind="text:  $data"></span>
+                                                <span data-bind="text: $data"></span>
                                             </label>
                                         </div>
                                         <!-- /ko -->
@@ -470,8 +496,8 @@ function ShowHideGridModel(root) {
 <!-- Tab panes -->
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="filterableHtml">
-        <pre>
-&lt;div class="filterableGridView" data-bind="dataGrid: filterGrid.gridView"&gt;&lt;/div&gt;
+<pre>
+&lt;div class="filterableBasicGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
 
 &lt;script id="filterStringTemplate" type="text/html"&gt;
 	&lt;form class="row" style="min-width: 250px;"&gt;
@@ -553,20 +579,22 @@ function ShowHideGridModel(root) {
 			&lt;/div&gt;
 		&lt;!-- /ko --&gt;
 	&lt;/form&gt;
-&lt;/script&gt;</pre>
+&lt;/script&gt;
+</pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="filterableCss">
-        <pre>
-.filterableGridView .dataGrid .dataGridColumnsContainer {display: none;}
-.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active,
-.filterableGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
-.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
-.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
-.filterableGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}</pre>
+ <pre>
+.filterableBasicGridView .dataGrid .dataGridColumnsContainer {display: none;}
+.filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active,
+.filterableBasicGridView .dataGrid table.dataGridTable > tbody tr td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.filterableBasicGridView .dataGrid table.dataGridTable > thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+ </pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="filterableJs">
-        <pre>
-function FilterGridModel(root) {
+<pre>
+function FilterBasicGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
         defaultSortField: "id",
@@ -696,21 +724,26 @@ function FilterGridModel(root) {
         var data = ko.utils.arrayMap(self.gridView.data(), function (i) { return i[column.itemProperty]; });
         return values = ko.utils.arrayGetDistinctValues(data);
     };
-}</pre>
+}
+</pre>
     </div>
 </div>
                 </div>
                 <div class="example">
                     <style type="text/css">
                         .filterableComplexGridView .dataGrid .dataGridColumnsContainer {display: none;}
-                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active,
-                        .filterableComplexGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
-                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
-                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
-                        .filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+                        .filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active,
+                        .filterableComplexGridView .dataGrid table.dataGridTable tbody tr td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+                        .filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+                        .filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+                        .filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
                     </style>
-                    <h1 id="filterableComplex">Filterable complex table</h1>
-                    <div class="filterableComplexGridView" data-bind="dataGrid: filterComplexGrid.gridView"></div>
+                    <h1 id="filterableComplex">Filterable complex view</h1>
+                    <p>Filter table items by value or range and highlight the filtered column when the apply button was clicked.</p>
+                    <p>To open the filter, click on the <i class="fa fa-filter"></i> icon.</p>
+                    <!-- ko with: filterComplexGrid -->
+                    <div class="filterableComplexGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko -->
 
                     <script id="filterComplexNumberTemplate" type="text/html">
                         <form style="width: 325px;">
@@ -815,7 +848,7 @@ function FilterGridModel(root) {
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="filterableComplexHtml">
 <pre>
-&lt;div class="filterableComplexGridView" data-bind="dataGrid: filterComplexGrid.gridView"&gt;&lt;/div&gt;
+&lt;div class="filterableComplexGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
 
 &lt;script id="filterComplexNumberTemplate" type="text/html"&gt;
 	&lt;form style="width: 325px;"&gt;
@@ -911,14 +944,15 @@ function FilterGridModel(root) {
     <div role="tabpanel" class="tab-pane" id="filterableComplexCss">
 <pre>
 .filterableComplexGridView .dataGrid .dataGridColumnsContainer {display: none;}
-.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active,
-.filterableComplexGridView .dataGrid table.dataGridTable > tbody > tr > td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
-.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
-.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
-.filterableComplexGridView .dataGrid table.dataGridTable > thead > tr > th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}</pre>
+.filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active,
+.filterableComplexGridView .dataGrid table.dataGridTable tbody tr td.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .3);}
+.filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader {background-color: transparent;}
+.filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, .5)}
+.filterableComplexGridView .dataGrid table.dataGridTable thead tr th.active .dataGridSubHeaderContainer .dataGridSubHeader .dataGridSubHeaderItem.active {background-color: rgb(223, 240, 216); background-color: rgba(223, 240, 216, 1);}
+</pre>
     </div>
     <div role="tabpanel" class="tab-pane" id="filterableComplexJs">
-        <pre>
+<pre>
 function FilterComplexGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
@@ -1130,6 +1164,251 @@ function FilterComplexGridModel(root) {
                 </div>
                 <div class="example">
                     <style type="text/css">
+                        .showHideGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+                        .showHideGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+                    </style>
+                    <h1 id="showHide">Show/Hide columns</h1>
+                    <p>Customize a table by show/hide columns.</p>
+                    <p>To show or hide column click on the <i class="fa fa-cog"></i> icon and tick or untick checkbox for an appropriate column name.</p>
+                    <!-- ko with: showHideGrid -->
+                    <div class="showHideGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko -->
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#showHideleHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#showHideCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#showHideJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="showHideleHtml">
+<pre>
+&lt;div class="showHideGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
+</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="showHideCss">
+<pre>
+.showHideGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+.showHideGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+</pre>
+</div>
+    <div role="tabpanel" class="tab-pane" id="showHideJs">
+<pre>
+function ShowHideGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        autoHideFilter: true,
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(true)
+                },
+                {
+                    name: 'Color',
+                    itemProperty: "color",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(false)
+                },
+                {
+                    name: 'Company Name',
+                    itemProperty: "companyName",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: ko.observable(false)
+                }
+        ]
+    });
+}
+</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
+                        .sortColumnsGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+                        .sortColumnsGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+                        .sortColumnsGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li {border: 1px solid #dddddd;cursor: move;margin-bottom: 3px;padding: 6px;}
+                        .sortColumnsGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li.ui-sortable-helper  {border: #dddddd dashed 1px;}
+                    </style>
+                    <h1 id="sortColumns">Sortable columns</h1>
+                    <p>Custom ordering of table columns.</p>
+                    <p>To enable the ability to sort the list of items is required to include the <a href="https://github.com/rniemeyer/knockout-sortable" target="_blank">knockout-sortable</a> component and its dependencies (<a href="http://jqueryui.com/sortable/" target="_blank">jQuery UI</a>).</p>
+                    <p>To sort columns click on the <i class="fa fa-cog"></i> icon and and drag and drop column names.</p>
+                    <!-- ko with: sortColumnsGrid -->
+                    <div class="sortColumnsGridView" data-bind="dataGrid: gridView"></div>
+                    <!-- /ko -->
+
+                    <script id="sortedColumnsTemplate" type="text/html">
+                        <div class="dataGridColumnsContainer">
+                            <a href="" class="dataGridColumnsLink" data-bind="click: function () { showFilter('columns') }">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <!-- ko if: currentOpenFilter() == 'columns' -->
+                            <div class="dataGridColumnsListContainer">
+                                <ul class="list-group sortable" data-bind="sortable: { template: 'sortedColumnsItemTemplate', data: columns }"></ul>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </script>
+
+                    <script id="sortedColumnsItemTemplate" type="text/html">
+                        <li class="">
+                            <span data-bind="text: name"></span>
+                        </li>
+                    </script>
+
+                    <!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#sortColumnsHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
+    <li role="presentation"><a href="#sortColumnsCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
+    <li role="presentation"><a href="#sortColumnsJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="sortColumnsHtml">
+<pre>
+&lt;script src="http://code.jquery.com/ui/jquery-ui-git.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"&gt;&lt;/script&gt;
+
+&lt;div class="sortColumnsGridView" data-bind="dataGrid: gridView"&gt;&lt;/div&gt;
+
+&lt;script id="sortedColumnsTemplate" type="text/html"&gt;
+    &lt;div class="dataGridColumnsContainer"&gt;
+        &lt;a href="" class="dataGridColumnsLink" data-bind="click: function () { showFilter('columns') }"&gt;
+            &lt;i class="fa fa-cog"&gt;&lt;/i&gt;
+        &lt;/a&gt;
+        &lt;!-- ko if: currentOpenFilter() == 'columns' --&gt;
+        &lt;div class="dataGridColumnsListContainer"&gt;
+            &lt;ul class="list-group sortable" data-bind="sortable: { template: 'sortedColumnsItemTemplate', data: columns }"&gt;&lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;!-- /ko --&gt;
+    &lt;/div&gt;
+&lt;/script&gt;
+
+&lt;script id="sortedColumnsItemTemplate" type="text/html"&gt;
+    &lt;li class=""&gt;
+        &lt;span data-bind="text: name"&gt;&lt;/span&gt;
+    &lt;/li&gt;
+&lt;/script&gt;
+</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="sortColumnsCss">
+<pre>
+.sortColumnsGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
+.sortColumnsGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
+.sortColumnsGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li {border: 1px solid #dddddd;cursor: move;margin-bottom: 3px;padding: 6px;}
+.sortColumnsGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li.ui-sortable-helper  {border: #dddddd dashed 1px;}
+</pre>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="sortColumnsJs">
+<pre>
+function SortColumnsGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        autoHideFilter: true,
+        data: root.data,
+        templates: { columns: 'sortedColumnsTemplate' },
+        columns: ko.observableArray([
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Color',
+                    itemProperty: "color",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Company Name',
+                    itemProperty: "companyName",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true
+                }
+        ])
+    });
+}
+</pre>
+    </div>
+</div>
+                </div>
+                <div class="example">
+                    <style type="text/css">
                         .customTemplatesGridView .dataGrid div.dataGridColumnsContainer { display: none; }
                         .customTemplatesGridView .dataGrid table thead tr:last-child { display: none; }
                         .customTemplatesGridView .dataGrid table.dataGridTable > thead > tr > th.active,
@@ -1320,154 +1599,6 @@ function CustomeTemplatesGridModel(root) {
 }</pre>
     </div>
 
-</div>
-                </div>
-                <div class="example">
-                    <style type="text/css">
-                        .showHideSortGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
-                        .showHideSortGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
-                        .showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li {border: 1px solid #dddddd;cursor: move;margin-bottom: 3px;padding: 0 6px;}
-                        .showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li.ui-sortable-helper  {border: #dddddd dashed 1px;}
-                    </style>
-                    <h1 id="showHideSort">Custom templates</h1>
-                    <div class="showHideSortGridView" data-bind="dataGrid: showHideSortGrid.gridView"></div>
-
-                    <script id="sortedColumnsTemplate" type="text/html">
-                        <div class="dataGridColumnsContainer">
-                            <a href="" class="dataGridColumnsLink" data-bind="click: function () { showFilter('columns') }">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                            <!-- ko if: currentOpenFilter() == 'columns' -->
-                            <div class="dataGridColumnsListContainer">
-                                <ul class="list-group sortable" data-bind="sortable: { template: 'sortedColumnItemTemplate', data: columns }"></ul>
-                            </div>
-                            <!-- /ko -->
-                        </div>
-                    </script>
-                    <script id="sortedColumnItemTemplate" type="text/html">
-                        <li class="">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" data-bind="checked: isVisible, click: function () { $parent.updateColumn($data); return true; }" />
-                                    <span data-bind="text: name"></span>
-                                </label>
-                            </div>
-                        </li>
-                    </script>
-
-                    <!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#showHideSortHtml" aria-controls="Html" role="tab" data-toggle="tab">Html</a></li>
-    <li role="presentation"><a href="#showHideSortCss" aria-controls="Css" role="tab" data-toggle="tab">Css</a></li>
-    <li role="presentation"><a href="#showHideSortJs" aria-controls="JavaScript" role="tab" data-toggle="tab">JavaScript</a></li>
-</ul>
-
-<!-- Tab panes -->
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="showHideSortHtml">
-        <pre>
-&lt;script src="http://code.jquery.com/ui/jquery-ui-git.js"&gt;&lt;/script&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"&gt;&lt;/script&gt;
-
-&lt;div class="showHideSortGridView" data-bind="dataGrid: showHideSortGrid.gridView"&gt;&lt;/div&gt;
-
-&lt;script id="sortedColumnsTemplate" type="text/html"&gt;
-	&lt;div class="dataGridColumnsContainer"&gt;
-		&lt;a href="" class="dataGridColumnsLink" data-bind="click: function () { showFilter('columns') }"&gt;
-			&lt;i class="fa fa-cog"&gt;&lt;/i&gt;
-		&lt;/a&gt;
-		&lt;!-- ko if: currentOpenFilter() == 'columns' --&gt;
-		&lt;div class="dataGridColumnsListContainer"&gt;
-			&lt;ul class="list-group sortable" data-bind="sortable: { template: 'sortedColumnItemTemplate', data: columns }"&gt;&lt;/ul&gt;
-		&lt;/div&gt;
-		&lt;!-- /ko --&gt;
-	&lt;/div&gt;
-&lt;/script&gt;
-&lt;script id="sortedColumnItemTemplate" type="text/html"&gt;
-	&lt;li class=""&gt;
-		&lt;div class="checkbox"&gt;
-			&lt;label&gt;
-				&lt;input type="checkbox" data-bind="checked: isVisible, click: function () { $parent.updateColumn($data); return true; }" /&gt;
-				&lt;span data-bind="text: name"&gt;&lt;/span&gt;
-			&lt;/label&gt;
-		&lt;/div&gt;
-	&lt;/li&gt;
-&lt;/script&gt;
-        </pre>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="showHideSortCss">
-        <pre>
-.showHideSortGridView .dataGrid table.dataGridTable > thead tr:last-child { display: none; }
-.showHideSortGridView .dataGrid table.dataGridTable > thead > tr > th { height: 51px; }
-.showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li {border: 1px solid #dddddd;cursor: move;margin-bottom: 3px;padding: 0 6px;}
-.showHideSortGridView .dataGrid .dataGridColumnsContainer .dataGridColumnsListContainer ul.sortable li.ui-sortable-helper  {border: #dddddd dashed 1px;}</pre>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="showHideSortJs">
-        <pre>
-function ShowHideSortGridModel(root) {
-    var self = this;
-
-    self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
-        defaultSortOrder: "asc",
-        tableGridClass: "table-striped table-hover",
-        pageSize: 10,
-        autoHideFilter: true,
-        data: root.data,
-        templates: { columns: 'sortedColumnsTemplate' },
-        columns: ko.observableArray([
-                {
-                    name: 'Id',
-                    itemProperty: "id",
-                    itemCellClass: "idItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'First name',
-                    itemProperty: "firstName",
-                    itemCellClass: "firstNameItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Last name',
-                    itemProperty: "lastName",
-                    itemCellClass: "lastNameItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Email',
-                    itemProperty: "email",
-                    itemCellClass: "emailItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Gender',
-                    itemProperty: "gender",
-                    itemCellClass: "genderItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'IP address',
-                    itemProperty: "iPaddress",
-                    itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(true)
-                },
-                {
-                    name: 'Color',
-                    itemProperty: "color",
-                    itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(false)
-                },
-                {
-                    name: 'Company Name',
-                    itemProperty: "companyName",
-                    itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(false)
-                }
-        ])
-    });
-}</pre>
-    </div>
 </div>
                 </div>
                 

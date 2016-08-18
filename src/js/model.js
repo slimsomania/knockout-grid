@@ -4,12 +4,13 @@ function Model() {
     self.data = ko.observableArray();
 
     self.defaultGrid = new DefaultGridModel(self)
+    self.highlightedGrid = new HighlightedGridModel(self)
     self.sortableGrid = new SortableGridModel(self)
     self.showHideGrid = new ShowHideGridModel(self)
-    self.filterGrid = new FilterGridModel(self)
+    self.FilterBasicGrid = new FilterBasicGridModel(self)
     self.filterComplexGrid = new FilterComplexGridModel(self)
     self.customTemplatesGrid = new CustomeTemplatesGridModel(self)
-    self.showHideSortGrid = new ShowHideSortGridModel(self)
+    self.sortColumnsGrid = new SortColumnsGridModel(self)
 }
 
 function DefaultGridModel(root) {
@@ -18,7 +19,6 @@ function DefaultGridModel(root) {
         defaultSortField: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
-        highlightRow: function (i) { return i.gender.indexOf("Male") > -1 },
         pageSize: 10,
         data: root.data,
         columns: [
@@ -44,8 +44,58 @@ function DefaultGridModel(root) {
                     name: 'Email',
                     itemProperty: "email",
                     itemCellClass: "emailItem",
-                    isVisible: true,
+                    isVisible: true
+                },
+                {
+                    name: 'Gender',
+                    itemProperty: "gender",
+                    itemCellClass: "genderItem",
+                    isVisible: true
+                },
+                {
+                    name: 'IP address',
+                    itemProperty: "iPaddress",
+                    itemCellClass: "iPaddressItem",
+                    isVisible: true
+                }
+        ]
+    });
+}
+
+function HighlightedGridModel(root) {
+    var self = this;
+    self.gridView = new ko.dataGrid.viewModel({
+        defaultSortField: "id",
+        defaultSortOrder: "asc",
+        tableGridClass: "table-striped table-hover",
+        pageSize: 10,
+        highlightRow: function (i) { return i.gender.indexOf("Male") > -1 },
+        data: root.data,
+        columns: [
+                {
+                    name: 'Id',
+                    itemProperty: "id",
+                    itemCellClass: "idItem",
+                    isVisible: true
+                },
+                {
+                    name: 'First name',
+                    itemProperty: "firstName",
+                    itemCellClass: "firstNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Last name',
+                    itemProperty: "lastName",
+                    itemCellClass: "lastNameItem",
+                    isVisible: true
+                },
+                {
+                    name: 'Email',
+                    itemProperty: "email",
+                    itemCellClass: "emailItem",
                     highlightCell: function (i) { return i.email.indexOf("com") > -1 },
+                    isVisible: true
                 },
                 {
                     name: 'Gender',
@@ -180,7 +230,7 @@ function ShowHideGridModel(root) {
     });
 }
 
-function FilterGridModel(root) {
+function FilterBasicGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
         defaultSortField: "id",
@@ -594,9 +644,8 @@ function CustomeTemplatesGridModel(root) {
     });
 }
 
-function ShowHideSortGridModel(root) {
+function SortColumnsGridModel(root) {
     var self = this;
-
     self.gridView = new ko.dataGrid.viewModel({
         defaultSortField: "id",
         defaultSortOrder: "asc",
@@ -610,49 +659,49 @@ function ShowHideSortGridModel(root) {
                     name: 'Id',
                     itemProperty: "id",
                     itemCellClass: "idItem",
-                    isVisible: ko.observable(true)
+                    isVisible: true
                 },
                 {
                     name: 'First name',
                     itemProperty: "firstName",
                     itemCellClass: "firstNameItem",
-                    isVisible: ko.observable(true)
+                    isVisible: true
                 },
                 {
                     name: 'Last name',
                     itemProperty: "lastName",
                     itemCellClass: "lastNameItem",
-                    isVisible: ko.observable(true)
+                    isVisible: true
                 },
                 {
                     name: 'Email',
                     itemProperty: "email",
                     itemCellClass: "emailItem",
-                    isVisible: ko.observable(true)
+                    isVisible: true
                 },
                 {
                     name: 'Gender',
                     itemProperty: "gender",
                     itemCellClass: "genderItem",
-                    isVisible: ko.observable(true)
+                    isVisible: true
                 },
                 {
                     name: 'IP address',
                     itemProperty: "iPaddress",
                     itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(true)
+                    isVisible: true
                 },
                 {
                     name: 'Color',
                     itemProperty: "color",
                     itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(false)
+                    isVisible: true
                 },
                 {
                     name: 'Company Name',
                     itemProperty: "companyName",
                     itemCellClass: "iPaddressItem",
-                    isVisible: ko.observable(false)
+                    isVisible: true
                 }
         ])
     });
