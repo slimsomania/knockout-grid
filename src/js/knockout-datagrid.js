@@ -1,5 +1,3 @@
-///<reference path="knockout-3.0.0.js"/>
-
 (function() {
     function dynamicSort(property, reverse, itemFormat) {
         reverse = !reverse ? 1 : -1;
@@ -71,7 +69,7 @@
 
             var self = this;
 
-            var defaultSortField = options.defaultSortField || null;
+            var defaultSortColumn = options.defaultSortColumn || null;
             var defaultSortOrder = options.defaultSortOrder || null;
 
             var afterFilteShow = options.afterFilteShow || setFocus;
@@ -90,7 +88,6 @@
             self.pageSizeValues = ko.observableArray([10, 25, 50, 100, 0]);
             self.currentPageIndex = ko.observable(0);
             self.columns = options.columns;
-            self.templates = options.templates || {};
 
             self.currentOpenFilter = ko.observable("");
             self.activeSortField = ko.observable();
@@ -120,12 +117,12 @@
             };
 
             var getSortParam = function () {
-                if (!self.activeSortField() && !defaultSortField) return [];
-                if (defaultSortField && !self.activeSortField()) return [{ itemProperty: defaultSortField, reverse: defaultSortOrder == self.sortOrder.descending, itemFormat: getFormat(defaultSortField) }];
-                if (self.activeSortField() && !defaultSortField) return [{ itemProperty: self.activeSortField(), reverse: self.activeSortOrder() == self.sortOrder.descending, itemFormat: getFormat(self.activeSortField()) }];
+                if (!self.activeSortField() && !defaultSortColumn) return [];
+                if (defaultSortColumn && !self.activeSortField()) return [{ itemProperty: defaultSortColumn, reverse: defaultSortOrder == self.sortOrder.descending, itemFormat: getFormat(defaultSortColumn) }];
+                if (self.activeSortField() && !defaultSortColumn) return [{ itemProperty: self.activeSortField(), reverse: self.activeSortOrder() == self.sortOrder.descending, itemFormat: getFormat(self.activeSortField()) }];
                 return [
                     { itemProperty: self.activeSortField(), reverse: self.activeSortOrder() == self.sortOrder.descending, itemFormat: getFormat(self.activeSortField()) },
-                    { itemProperty: defaultSortField, reverse: defaultSortOrder == self.sortOrder.descending, itemFormat: getFormat(defaultSortField) }
+                    { itemProperty: defaultSortColumn, reverse: defaultSortOrder == self.sortOrder.descending, itemFormat: getFormat(defaultSortColumn) }
                 ];
             };
 
@@ -154,7 +151,7 @@
                     if (self.activeSortOrder() == self.sortOrder.ascending) {
                         self.activeSortOrder(self.sortOrder.descending);
                     } else {
-                        !!defaultSortField ? setToDefaultOrder() : self.activeSortOrder(self.sortOrder.ascending);
+                        !!defaultSortColumn ? setToDefaultOrder() : self.activeSortOrder(self.sortOrder.ascending);
                     }
                     return;
                 }
@@ -200,36 +197,7 @@
     };
 
     templateEngine.addTemplate("ko_dataGrid_grid",
-        "<div class=\"dataGrid\">" +
-            //
-            //---------- Start data grid columns ----------
-            "<!-- ko if: !!$data.templates && !!$data.templates.columns && $data.templates.columns -->" +
-            "<!-- ko template: { name: templates.columns } --><!-- /ko -->" +
-            "<!-- /ko -->" +
-            "<!-- ko ifnot: !!$data.templates && !!$data.templates.columns && $data.templates.columns -->" +
-            "<div class=\"dataGridColumnsContainer\">" +
-            "<a href=\"\" class=\"dataGridColumnsLink\" data-bind=\"click: function() { showFilter('columns') }\">" +
-            "<i class=\"fa fa-cog\"></i>" +
-            "</a>" +
-            "<!-- ko if: currentOpenFilter() == 'columns' -->" +
-            "<div class=\"dataGridColumnsListContainer\">" +
-            "<ul class=\"list-group\" data-bind=\"foreach: columns\">" +
-            "<li>" +
-            "<div class=\"checkbox\">" +
-            "<label>" +
-            "<input type=\"checkbox\" data-bind=\"checked: isVisible, click: function() { $parent.updateColumn($data); return true; }\" />" +
-            "<span data-bind=\"text: name\"></span>" +
-            "</label>" +
-            "</div>" +
-            "</li>" +
-            "</ul>" +
-            "</div>" +
-            "<!-- /ko -->" +
-            "</div>" +
-            "<!-- /ko -->" +
-            //
-            //---------- End data grid columns ----------
-            "<table class=\"dataGridTable table\" data-bind=\"css: tableGridClass\">" +
+          "<table class=\"dataGridTable table\" data-bind=\"css: tableGridClass\">" +
             "<thead>" +
             "<tr>" +
             "<!-- ko foreach: filteredColumns -->" +
@@ -317,6 +285,27 @@
             "</tr>" +
             "</tbody>" +
             "</table>" +
+            "");
+
+    templateEngine.addTemplate("ko_dataGrid_columns",
+        "<div class=\"dataGridColumnsContainer\">" +
+            "<a href=\"\" class=\"dataGridColumnsLink\" data-bind=\"click: function() { showFilter('columns') }\">" +
+            "<i class=\"fa fa-cog\"></i>" +
+            "</a>" +
+            "<!-- ko if: currentOpenFilter() == 'columns' -->" +
+            "<div class=\"dataGridColumnsListContainer\">" +
+            "<ul class=\"list-group\" data-bind=\"foreach: columns\">" +
+            "<li>" +
+            "<div class=\"checkbox\">" +
+            "<label>" +
+            "<input type=\"checkbox\" data-bind=\"checked: isVisible, click: function() { $parent.updateColumn($data); return true; }\" />" +
+            "<span data-bind=\"text: name\"></span>" +
+            "</label>" +
+            "</div>" +
+            "</li>" +
+            "</ul>" +
+            "</div>" +
+            "<!-- /ko -->" +
             "</div>" +
             "");
 
@@ -366,9 +355,13 @@
 
             var gridTemplateName = allBindings.get('dataGridTemplate') || "ko_dataGrid_grid";
             var pageLinksTemplateName = allBindings.get('dataGridPagingTemplate') || "ko_dataGrid_paging";
+            var columnsTemplateName = allBindings.get('dataGridColumnsTemplate') || "ko_dataGrid_columns";
 
             var gridContainer = element.appendChild(document.createElement("DIV"));
             ko.renderTemplate(gridTemplateName, viewModel, { templateEngine: templateEngine }, gridContainer, "replaceNode");
+
+            var columnsContainer = element.appendChild(document.createElement("DIV"));
+            ko.renderTemplate(columnsTemplateName, viewModel, { templateEngine: templateEngine }, columnsContainer, "replaceNode");
 
             var pageLinksContainer = element.appendChild(document.createElement("DIV"));
             ko.renderTemplate(pageLinksTemplateName, viewModel, { templateEngine: templateEngine }, pageLinksContainer, "replaceNode");

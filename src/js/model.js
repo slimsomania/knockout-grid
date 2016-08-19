@@ -16,7 +16,7 @@ function Model() {
 function DefaultGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -65,7 +65,7 @@ function DefaultGridModel(root) {
 function HighlightedGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -116,7 +116,7 @@ function HighlightedGridModel(root) {
 function SortableGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -171,7 +171,7 @@ function SortableGridModel(root) {
 function ShowHideGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -233,7 +233,7 @@ function ShowHideGridModel(root) {
 function FilterBasicGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -365,7 +365,7 @@ function FilterBasicGridModel(root) {
 function FilterComplexGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -572,7 +572,7 @@ function FilterComplexGridModel(root) {
 function CustomeTemplatesGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
@@ -647,13 +647,12 @@ function CustomeTemplatesGridModel(root) {
 function SortColumnsGridModel(root) {
     var self = this;
     self.gridView = new ko.dataGrid.viewModel({
-        defaultSortField: "id",
+        defaultSortColumn: "id",
         defaultSortOrder: "asc",
         tableGridClass: "table-striped table-hover",
         pageSize: 10,
         autoHideFilter: true,
         data: root.data,
-        templates: { columns: 'sortedColumnsTemplate' },
         columns: ko.observableArray([
                 {
                     name: 'Id',
