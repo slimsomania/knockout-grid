@@ -1618,28 +1618,29 @@ function CustomeTemplatesGridModel(root) {
             </div>
             <div class="tab-pane active" role="tabpanel" id="options">
                 <div class="row">
-                    <div class="col-md-3" role="complementary">
+                    <div class="col-md-12" role="complementary">
+                        <h1>General options</h1>
                         <table class="table table-bordered table-hover">
                             <tr>
                                 <th>Name</th>
+                                <th>Type</th>
                                 <th>Default</th>
                                 <th>Description</th>
                             </tr>
                             <tr>
-                                <th colspan="3">General options</th>
-                            </tr>
-                            <tr>
                                 <td>dataGridTemplate</td>
+                                <td>string</td>
                                 <td>none</td>
                                 <td>
-                                    Template for table view <br /><br />
+                                    Template for table columns list view <br /><br />
 <pre>
 &lt;div data-bind="dataGrid: modal, dataGridTemplate: 'exampleTemplate'"&gt;&lt;/div&gt;
 </pre>
                                 </td>
                             </tr>
                             <tr>
-                                <td>dataGridTemplate</td>
+                                <td>dataGridColumnsTemplate</td>
+                                <td>string</td>
                                 <td>none</td>
                                 <td>
                                     Template for columns modal view <br /><br />
@@ -1650,6 +1651,7 @@ function CustomeTemplatesGridModel(root) {
                             </tr>
                             <tr>
                                 <td>dataGridPagingTemplate</td>
+                                <td>string</td>
                                 <td>none</td>
                                 <td>
                                     Template for paging view <br /><br />
@@ -1659,72 +1661,145 @@ function CustomeTemplatesGridModel(root) {
                                 </td>
                             </tr>
                             <tr>
-                                <td>defaultSortOrder</td>
-                                <td>none</td>
-                                <td>
-                                    Sets the the default sort order<br /><br />
+                                    <td>data</td>
+                                    <td>array</td>
+                                    <td>null</td>
+                                    <td>
+                                        The data for the table grid.<br />
+                                        This option must be used with the "columns" option.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
-    data: [],
-    columns: []
-    defaultSortOrder: 'itemProperty'
+    data: [
+        {id: "1"}, 
+        {id: "2"}, 
+        {id: "3"}
+    ]
+});
+</pre>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>columns</td>
+                                    <td>array</td>
+                                    <td>null</td>
+                                    <td>
+                                        The data for the columns properties.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            name: 'Id',
+            itemProperty: "id"
+        },
+    ]
+});
+</pre>
+                                    </td>
+                            </tr>
+                            <tr>
+                                <td>defaultSortColumn</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>
+                                    Sets the column for a default sorting.<br /> 
+                                    This option must be used with the "defaultSortOrder" option.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    defaultSortColumn: 'itemProperty'
+});
+</pre>
+                                </td>
+                              </tr>
+                            <tr>
+                                <td>defaultSortOrder</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>
+                                    Sets the default sort order. <br /> 
+                                    This option must be used with the "defaultSortColumn" option. <br />
+                                    Accepts: asc/desc.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    defaultSortOrder: 'asc'
 });
 </pre>
                                 </td>
                             </tr>
                             <tr>
-                                <td>defaultSortColumn</td>
-                                <td>none</td>
-                                <td>
-                                    Sets the column for default sorting<br /><br />
+                                    <td>tableGridClass</td>
+                                    <td>string</td>
+                                    <td>none</td>
+                                    <td>
+                                        Adds this class to the table html element.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
-    data: [],
-    columns: []
-    defaultSortOrder: 'itemProperty'
-    defaultSortOrder: 'asc/desc'
+    tableGridClass: 'table-striped table-hover'
 });
 </pre>
-                                </td>
-                              </tr>
-                              <tr>
-                                    <td>autoHideFilter</td>
-                                    <td>false</td>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>highlightRow</td>
+                                    <td>function</td>
+                                    <td>none</td>
                                     <td>
-                                        Sets a value indicating whether a filter pop-up has to be closed when a user click somewhere outside popup.<br /><br />
+                                        Returns a boolean indicating whether the "highlight" class has to be added to a specific row of the table grid.<br />
+                                        Takes an object of the specific item of data array as an parameter.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
-    data: [],
-    columns: []
-    autoHideFilter: true
+    highlightRow: function (i) { return i.gender.indexOf("Male") > -1 }
 });
 </pre>
                                     </td>
                             </tr>
                             <tr>
                                     <td>afterFilteShow</td>
-                                    <td>set focus</td>
+                                    <td>function</td>
+                                    <td>set focus on first input</td>
                                     <td>
-                                        Callback that is triggered after the filter pop-ups have been shown.<br /><br />
+                                        Callback that is triggered after the filter pop-up have been shown.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
-    data: [],
-    columns: []
-    autoHideFilter: true
+    afterFilteShow: function() { alert("the filter pop-up have been shown") }
 });
 </pre>
                                     </td>
                             </tr>
                             <tr>
-                                    <td>tableGridClass</td>
-                                    <td>none</td>
+                                    <td>autoHideFilter</td>
+                                    <td>boolean</td>
+                                    <td>false</td>
                                     <td>
-                                        Sets a css class for the table.<br /><br />
+                                        Sets a value indicating whether a filter pop-up has to be closed when a user click somewhere outside the popup.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
-    data: [],
-    columns: []
-    tableGridClass: 'table-striped table-hover'
+    autoHideFilter: true
+});
+</pre>
+                                    </td>
+                            </tr>
+                        </table>
+                        <h1>Column options</h1>
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                    <td>name</td>
+                                    <td>string</td>
+                                    <td>none</td>
+                                    <td>
+                                        Sets the specific name for the table column.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            name: 'Id'
+        }
+    ]
 });
 </pre>
                                     </td>

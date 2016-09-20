@@ -79,15 +79,16 @@
                 ascending: "asc",
                 descending: "desc"
             };
+
+            self.columns = options.columns;
+            self.data = options.data;
             
             self.tableGridClass = options.tableGridClass;
             self.highlightRow = options.highlightRow;
 
-            self.data = options.data;
             self.pageSize = ko.observable(options.pageSize | 0);
             self.pageSizeValues = ko.observableArray([10, 25, 50, 100, 0]);
             self.currentPageIndex = ko.observable(0);
-            self.columns = options.columns;
 
             self.currentOpenFilter = ko.observable("");
             self.activeSortField = ko.observable();
