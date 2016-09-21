@@ -1744,10 +1744,11 @@ new ko.dataGrid.viewModel({
                                     <td>none</td>
                                     <td>
                                         Returns a boolean indicating whether the "highlight" class has to be added to a specific row of the table grid.<br />
-                                        Takes an object of the specific item of data array as an parameter.<br /><br />
+                                        Takes an object of the specific item of the data array as a parameter.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
-    highlightRow: function (i) { return i.gender.indexOf("Male") > -1 }
+    data: [{id: "1", email: "test@example.com" }],
+    highlightRow: function (i) { return i.email.indexOf("com") > -1 }
 });
 </pre>
                                     </td>
@@ -1778,6 +1779,21 @@ new ko.dataGrid.viewModel({
 </pre>
                                     </td>
                             </tr>
+                            <tr>
+                                    <td>pageSize</td>
+                                    <td>int</td>
+                                    <td>0</td>
+                                    <td>
+                                        Sets a value of the page size.<br />
+                                        Accepts: 10, 25, 50, 100, 0.<br />
+                                        0, means show all data.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    pageSize: 10
+});
+</pre>
+                                    </td>
+                            </tr>
                         </table>
                         <h1>Column options</h1>
                         <table class="table table-bordered table-hover">
@@ -1792,7 +1808,7 @@ new ko.dataGrid.viewModel({
                                     <td>string</td>
                                     <td>none</td>
                                     <td>
-                                        Sets the specific name for the table column.<br /><br />
+                                        Sets the name for a specific table column.<br /><br />
 <pre>
 new ko.dataGrid.viewModel({
     columns: [
@@ -1804,6 +1820,170 @@ new ko.dataGrid.viewModel({
 </pre>
                                     </td>
                             </tr>
+                            <tr>
+                                    <td>itemProperty</td>
+                                    <td>string</td>
+                                    <td>none</td>
+                                    <td>
+                                        Sets the property name for a specific table column.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            itemProperty: 'Id'
+        }
+    ]
+});
+</pre>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>headerCellClass </td>
+                                    <td>string</td>
+                                    <td>none</td>
+                                    <td>
+                                        Adds this class to a column header elemnt.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            headerCellClass : 'headerId'
+        }
+    ]
+});
+</pre>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>itemCellClass </td>
+                                    <td>string</td>
+                                    <td>none</td>
+                                    <td>
+                                        Adds this class to a column cells elemnt.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            itemCellClass : 'itemId'
+        }
+    ]
+});
+</pre>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>isVisible </td>
+                                    <td>boolean</td>
+                                    <td>false</td>
+                                    <td>
+                                        If true, the column is displayed at the table grid.<br />
+                                        The value can also be an observable function <code>ko.observable()</code>.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            isVisible : true
+        }
+    ]
+});
+</pre>
+                                    </td>
+                                </tr>
+                            <tr>
+                                    <td>isSortable</td>
+                                    <td>boolean</td>
+                                    <td>false</td>
+                                    <td>
+                                        If true, the cell with sorting markup is displayed at the table grid.<br />
+                                        The value can also be an observable function <code>ko.observable()</code>.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            isSortable : true
+        }
+    ]
+});
+</pre>
+                                    </td>
+                            </tr>
+                            <tr>
+                                    <td>highlightCell</td>
+                                    <td>function</td>
+                                    <td>none</td>
+                                    <td>
+                                        Returns a boolean indicating whether the "highlight" class has to be added to a specific cell of the table grid.<br />
+                                        Takes an object of the specific item of the data array as a parameter.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            data: [{id: "1", email: "test@example.com" }],
+            highlightCell : function (i) { return i.email.indexOf("com") > -1 }
+        }
+    ]
+});
+</pre>
+                                    </td>
+                                </tr>
+                            <tr>
+                                    <td>templates</td>
+                                    <td>object</td>
+                                    <td>null</td>
+                                    <td>
+                                        Templates for the column items.<br /><br />
+                                        <strong>header</strong> - template for a column header cell.<br />
+                                        <strong>item</strong> - template for a column item cell.<br />
+                                        <strong>filter</strong> - template for a column cell with a filtering functionality.<br />
+                                        <strong>sort</strong> - template for a column cell with a sorting functionality.<br /><br />
+                                        Accepts: string values.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            templates : {
+                header : "headerCellTemplate",
+                filter : "filterCellTemplate",
+                sort : "sortCellTemplate",
+                item : "itemCellTemplate",
+            }
+        }
+    ]
+});
+</pre>
+                                    </td>
+                                </tr>
+                            <tr>
+                                    <td>filter</td>
+                                    <td>object</td>
+                                    <td>null</td>
+                                    <td>
+                                        Provides necessary functions for an ability to filter column data.<br />
+                                        This option must be used with the "templates" column' option.<br />
+                                        An object must have two methods in order to be able to filter the data. They are the following:<br /><br />
+
+                                        <strong>func</strong> - function that is triggered for each item in the data array and returns a boolean indicating whether the item meets the query.<br />
+                                        The function takes two params:<br />
+                                        - first is a current filter object;<br />
+                                        - second is an object of the specific item of the data array;<br /><br />
+                                        <strong>isActive</strong> - Function that returns a boolean indicating whether the the filter was applied.<br /><br />
+
+                                        Plesae see examples for more details.<br /><br />
+<pre>
+new ko.dataGrid.viewModel({
+    columns: [
+        {
+            filter: { 
+                q: ko.observable(""), 
+                func: function (f, i) { return i.firstName.indexOf(f.q()) > -1; },
+                isActive: function () { return !!this.q(); }
+            },
+        }
+    ]
+});
+</pre>
+                                    </td>
+                                </tr>
                         </table>
                     </div>
                 </div>
