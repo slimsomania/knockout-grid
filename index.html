@@ -35,6 +35,13 @@
         .example { margin-bottom: 50px;margin-top: -71px;}
         .example h1 {padding-top: 71px; margin-top: 0;}
         .example .nav {margin-bottom: 15px;}
+
+        @media (max-width: 991px) {
+            .affix {
+                position: static;
+                margin-bottom: 71px;
+            }
+        }
     </style>
 </head>
 
@@ -1618,7 +1625,7 @@ function CustomeTemplatesGridModel(root) {
             </div>
             <div class="tab-pane" role="tabpanel" id="options">
                 <div class="row">
-                    <div class="col-md-12" role="complementary">
+                    <div class="col-md-12">
                         <h1>General options</h1>
                         <table class="table table-bordered table-hover">
                             <tr>
@@ -2003,19 +2010,11 @@ new ko.dataGrid.viewModel({
     
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="lib/js/ie10-viewport-bug-workaround.js"></script>
-	
-	<script type="text/javascript">
-        $(function () {
-            
-        });
-    </script>
 
     <script type="text/javascript">
         $(function () {
-
             var model = new Model();
             model.data(
-
                 [{ "id": 1, "firstName": "Christopher", "lastName": "Chavez", "email": "cchavez0@epa.gov", "gender": "Male", "iPaddress": "24.139.1.231", "color": "Purple", "companyName": "Leenti", "phone": "420-(109)467-6820", "mimeType": "video/x-msvideo", "domainName": "google.ca" },
 { "id": 2, "firstName": "Thomas", "lastName": "Rose", "email": "trose1@myspace.com", "gender": "Male", "iPaddress": "41.31.93.126", "color": "Purple", "companyName": "Divavu", "phone": "46-(445)157-8349", "mimeType": "image/tiff", "domainName": "bluehost.com" },
 { "id": 3, "firstName": "Laura", "lastName": "Hughes", "email": "lhughes2@shop-pro.jp", "gender": "Female", "iPaddress": "253.40.164.94", "color": "Goldenrod", "companyName": "Dabvine", "phone": "351-(868)721-8345", "mimeType": "video/msvideo", "domainName": "lycos.com" },
@@ -2116,7 +2115,6 @@ new ko.dataGrid.viewModel({
 { "id": 98, "firstName": "Jack", "lastName": "Mcdonald", "email": "jmcdonald2p@prweb.com", "gender": "Male", "iPaddress": "186.116.115.217", "color": "Orange", "companyName": "Fliptune", "phone": "86-(959)986-1672", "mimeType": "application/x-excel", "domainName": "youtu.be" },
 { "id": 99, "firstName": "Nicole", "lastName": "Hudson", "email": "nhudson2q@utexas.edu", "gender": "Female", "iPaddress": "35.57.234.79", "color": "Fuscia", "companyName": "Devpulse", "phone": "216-(472)375-5902", "mimeType": "image/gif", "domainName": "github.com" },
 { "id": 100, "firstName": "Richard", "lastName": "Taylor", "email": "rtaylor2r@lulu.com", "gender": "Male", "iPaddress": "241.87.93.240", "color": "Mauv", "companyName": "Meevee", "phone": "62-(414)815-5074", "mimeType": "application/x-msexcel", "domainName": "google.es" }]
-
                 );
 
             ko.applyBindings(model);
